@@ -1,2 +1,9 @@
 other/
 *.pyc
+myLibrary.db
+e
+l
+err
+log
+*.swp
+myLibrary.db-journal
