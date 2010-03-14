@@ -55,6 +55,10 @@ class BookInfo(object):
 
         return self._stamp
 
+    @property
+    def annotation(self):
+        raise BookInfoError('Not implemented')
+
 class BookReader:
     def __init__(self):
         self._formats = []

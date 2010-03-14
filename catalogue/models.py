@@ -11,6 +11,8 @@ class Book(models.Model):
     file = models.TextField(null=False)
     file_stamp = models.DateTimeField()
 
+    annotation = models.TextField(null=True)
+
     class Meta:
         ordering = [ 'title' ]
 
