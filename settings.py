@@ -79,3 +79,5 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'myLibrary.catalogue',
 )
+
+APPEND_SLASH = False
