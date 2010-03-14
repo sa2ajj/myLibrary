@@ -8,7 +8,7 @@ class FB2BookInfo(BookInfo):
 
     @staticmethod
     def supports(filename):
-        return filename.endswith('.fb2.zip')
+        return filename.endswith('.fb2.zip') or filename.endswith('.fb2')
 
     @property
     def valid(self):
