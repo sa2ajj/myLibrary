@@ -5,7 +5,7 @@ from datetime import datetime
 class BookInfoError(Exception):
     pass
 
-class BookInfo:
+class BookInfo(object):
     def __init__(self, path):
         self._path = path
         self._stamp = None
