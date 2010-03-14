@@ -3,6 +3,10 @@ from formats import BookInfo
 
 class FB2BookInfo(BookInfo):
     @staticmethod
+    def format_name():
+        return 'FB2'
+
+    @staticmethod
     def supports(filename):
         return filename.endswith('.fb2.zip')
 

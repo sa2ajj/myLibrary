@@ -11,6 +11,10 @@ class BookInfo:
         self._stamp = None
 
     @staticmethod
+    def format_name():
+        raise BookInfoError('Not implemented')
+
+    @staticmethod
     def supports(filename):
         raise BookInfoError('Not implemented')
 

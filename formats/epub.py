@@ -3,6 +3,10 @@ from formats import BookInfo
 
 class EpubBookInfo(BookInfo):
     @staticmethod
+    def format_name():
+        return 'ePub'
+
+    @staticmethod
     def supports(filename):
         return filename.endswith('.epub')
 
