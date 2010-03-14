@@ -34,6 +34,7 @@ class Series(models.Model):
     name = models.CharField(max_length=256, null=False)
 
     class Meta:
+        verbose_name_plural = 'Series'
         db_table = 'catalogue_series'
         ordering = [ 'name' ]
 
