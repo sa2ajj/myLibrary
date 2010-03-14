@@ -22,3 +22,4 @@ class FB2BookInfo(BookInfo):
     def authors(self):
         return 'FB2: authors'
 
+# vim:ts=4:sw=4:et
