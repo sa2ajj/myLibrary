@@ -9,6 +9,7 @@ class Book(models.Model):
 
     # MSS: probably, this needs to be replaced with FileField or something
     file = models.TextField(null=False)
+    file_stamp = models.DateTimeField()
 
     class Meta:
         ordering = [ 'title' ]
