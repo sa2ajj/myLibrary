@@ -23,7 +23,7 @@ def get_good_zip(zipname):
 
 def parse_xml(data, dump=False):
     try:
-        result = ET.fromstring(data)
+        result = ET.fromstring(data).getroot()
     except:
         # TODO: try to find a way to catch the right exception only
         if dump:
