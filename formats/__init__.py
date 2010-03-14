@@ -15,6 +15,10 @@ class BookInfo:
         raise BookInfoError('Not implemented')
 
     @property
+    def valid(self):
+        raise BookInfoError('Not implemented')
+
+    @property
     def title(self):
         raise BookInfoError('Not implemented')
 

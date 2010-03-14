@@ -7,6 +7,10 @@ class EpubBookInfo(BookInfo):
         return filename.endswith('.epub')
 
     @property
+    def valid(self):
+        return False
+
+    @property
     def title(self):
         return 'ePub: title'
 
