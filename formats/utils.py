@@ -6,7 +6,7 @@ from xml.etree import ElementTree as ET
 
 from traceback import print_exc
 
-def get_good_zip(zipname):
+def get_good_zip(zipname, test=False):
     ''' a helper function that returns an instance of ZipFile for a good zip file '''
 
     try:
@@ -15,7 +15,7 @@ def get_good_zip(zipname):
         print >> sys.stderr, '%s is not a zip file' % zipname
         return
 
-    if archive.testzip():
+    if test and archive.testzip():
         print >> sys.stderr, '%s is broken' % zipname
         return
 
