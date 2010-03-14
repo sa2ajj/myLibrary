@@ -3,6 +3,9 @@ from django.db import models
 class Book(models.Model):
     ''' ... '''
 
+    uid = models.CharField(max_length=1024, null=False)
+    uid_scheme = models.CharField(max_length=64, null=False)
+
     title = models.TextField(null=False)
 
     language = models.CharField(max_length=64, null=False)
@@ -15,6 +18,9 @@ class Book(models.Model):
 
     class Meta:
         ordering = [ 'title' ]
+        unique_together = (
+            ('uid', 'uid_scheme'),
+        )
 
 class Author(models.Model):
     ''' ... '''
