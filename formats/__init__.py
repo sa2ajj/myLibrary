@@ -2,6 +2,9 @@
 from os import stat
 from datetime import datetime
 
+class BookInfoError(Exception):
+    pass
+
 class BookInfo:
     def __init__(self, path):
         self._path = path
@@ -9,19 +12,19 @@ class BookInfo:
 
     @staticmethod
     def supports(filename):
-        raise NotImplemented
+        raise BookInfoError('Not implemented')
 
     @property
     def title(self):
-        raise NotImplemented
+        raise BookInfoError('Not implemented')
 
     @property
     def authors(self):
-        raise NotImplemented
+        raise BookInfoError('Not implemented')
 
     @property
     def series(self):
-        raise NotImplemented
+        raise BookInfoError('Not implemented')
 
     @property
     def path(self):
