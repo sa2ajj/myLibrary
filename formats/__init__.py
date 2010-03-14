@@ -39,6 +39,10 @@ class BookInfo(object):
         raise BookInfoError('Not implemented')
 
     @property
+    def tags(self):
+        raise BookInfoError('Not implemented')
+
+    @property
     def path(self):
         return self._path
 
