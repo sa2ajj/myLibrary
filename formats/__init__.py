@@ -23,6 +23,10 @@ class BookInfo:
         raise BookInfoError('Not implemented')
 
     @property
+    def language(self):
+        raise BookInfoError('Not implemented')
+
+    @property
     def title(self):
         raise BookInfoError('Not implemented')
 
