@@ -21,13 +21,14 @@ def get_good_zip(zipname):
 
     return archive
 
-def parse_xml(data):
+def parse_xml(data, dump=False):
     try:
         result = ET.fromstring(data)
     except:
         # TODO: try to find a way to catch the right exception only
-        print_exc()
-        print >> sys.stderr, 'parse_xml: %s: %s' % (type(data), data)
+        if dump:
+            print_exc()
+            print >> sys.stderr, 'parse_xml: %s: %s' % (type(data), data)
 
         result = None
 
