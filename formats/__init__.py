@@ -6,6 +6,8 @@ from sha import sha
 class BookInfoError(Exception):
     pass
 
+BookInfoNotImplemented = BookInfoError('Not implemented')
+
 class BookInfo(object):
     def __init__(self, path):
         self._path = path
@@ -15,35 +17,35 @@ class BookInfo(object):
 
     @staticmethod
     def format_name():
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @staticmethod
     def supports(filename):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def valid(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def language(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def title(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def authors(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def series(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def tags(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
     @property
     def path(self):
@@ -67,7 +69,7 @@ class BookInfo(object):
 
     @property
     def annotation(self):
-        raise BookInfoError('Not implemented')
+        raise BookInfoNotImplemented
 
 class BookReader:
     def __init__(self):
