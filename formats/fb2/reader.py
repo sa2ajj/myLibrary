@@ -12,7 +12,7 @@ TITLE_ELEM = '{%s}book-title' % FB2_NS
 TAG_ELEM = '{%s}genre' % FB2_NS
 LANG_ELEM = '{%s}lang' % FB2_NS
 AUTHOR_ELEM = '{%s}author' % FB2_NS
-SERIES_ELEM = '{%s}series' % FB2_NS
+SERIES_ELEM = '{%s}sequence' % FB2_NS
 
 DOCUMENT_INFO_ELEM = '{%s}document-info' % FB2_NS
 ID_ELEM = '{%s}id' % FB2_NS
@@ -100,8 +100,8 @@ def read(path):
         elif child.tag == LANG_ELEM:
             language = strip_text(child.text)
         elif child.tag == SERIES_ELEM:
-            if name in child and child['name']:
-                series.append((child['name'], child['number']))
+            if 'name' in child.attrib and child.attrib['name']:
+                series.append((child.attrib['name'], child.attrib['number']))
 
     return {
         'title': title,
