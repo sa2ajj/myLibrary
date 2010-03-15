@@ -1,4 +1,6 @@
 
+''' A number of commonly used functions '''
+
 import sys
 import zipfile
 
@@ -21,12 +23,14 @@ def get_good_zip(zipname, test=False):
 
     return archive
 
-def parse_xml(data, dump=False, label=None):
+def parse_xml(data, info=False, label=None):
+    ''' parses provided XML string using ElementTree '''
+
     try:
         result = ET.fromstring(data)
     except:
         # TODO: try to find a way to catch the right exception only
-        if dump:
+        if info:
             print_exc()
             if label:
                 print >> sys.stderr, 'Label:', label
@@ -37,6 +41,8 @@ def parse_xml(data, dump=False, label=None):
     return result
 
 def dump(elem, indent=0, stream=sys.stdout):
+    ''' pretty dumps an ElementTree '''
+
     if elem.text:
         text = ' text: %s' % repr(elem.text)
     else:
