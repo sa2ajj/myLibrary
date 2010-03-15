@@ -12,6 +12,8 @@ class BookSeriesInline(admin.TabularInline):
     extra = 1
 
 class BookAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+
     inlines = (BookAuthorInline, BookSeriesInline)
 
     fieldsets = (
@@ -27,6 +29,8 @@ class BookAdmin(admin.ModelAdmin):
     )
 
 class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
     inlines = (BookAuthorInline,)
 
 class SeriesAdmin(admin.ModelAdmin):
