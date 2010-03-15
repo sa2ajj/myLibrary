@@ -16,7 +16,7 @@ def print_info(book_info):
         if book_info.series:
             print ' series:'
             for series, number in book_info.series:
-                print '  %s (#%s)' % (safe_text(series), number)
+                print '   %s (#%s)' % (safe_text(series), number)
         if book_info.tags:
             print ' tags:'
             for tag in book_info.tags:
