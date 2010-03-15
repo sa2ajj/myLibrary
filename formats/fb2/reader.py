@@ -100,7 +100,7 @@ def read(path):
         elif child.tag == LANG_ELEM:
             language = strip_text(child.text)
         elif child.tag == SERIES_ELEM:
-            if 'name' in child.attrib and child.attrib['name']:
+            if 'name' in child.attrib and child.attrib['name'] and child.attrib.get('number', 0):
                 series.append((child.attrib['name'], child.attrib['number']))
 
     return {
