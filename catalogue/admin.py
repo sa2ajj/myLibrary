@@ -7,8 +7,12 @@ class BookAuthorInline(admin.TabularInline):
     model = BookAuthor
     extra = 1
 
+class BookSeriesInline(admin.TabularInline):
+    model = BookSeries
+    extra = 1
+
 class BookAdmin(admin.ModelAdmin):
-    inlines = (BookAuthorInline,)
+    inlines = (BookAuthorInline, BookSeriesInline)
 
     fieldsets = (
         ('UID', {
@@ -25,7 +29,10 @@ class BookAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     inlines = (BookAuthorInline,)
 
+class SeriesAdmin(admin.ModelAdmin):
+    inlines = (BookSeriesInline,)
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
-admin.site.register(Series)
+admin.site.register(Series, SeriesAdmin)
 admin.site.register(Tag)
