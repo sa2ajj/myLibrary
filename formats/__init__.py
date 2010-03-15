@@ -51,6 +51,10 @@ class BookInfo(object):
         raise BookInfoNotImplemented
 
     @property
+    def mimetype(self):
+        raise BookInfoNotImplemented
+
+    @property
     def path(self):
         return self._path
 
