@@ -3,9 +3,8 @@
 def safe_text(text):
     return text.encode('utf-8')
 
-def update_book(book_info):
+def print_info(book_info):
     if book_info.valid:
-        print 'update_book: found a book:', book_info.path, book_info.stamp
         print ' title:', safe_text(book_info.title)
         print ' authors:'
         for author in book_info.authors:
@@ -17,5 +16,10 @@ def update_book(book_info):
         print ' tags:'
         for tag in book_info.tags:
             print '  ', safe_text(tag)
+
+def update_book(book_info):
+    if book_info.valid:
+        print 'update_book: found a book:', book_info.path, book_info.stamp
+        print_info(book_info)
     else:
         print 'update_book: not a valid book at', book_info.path
