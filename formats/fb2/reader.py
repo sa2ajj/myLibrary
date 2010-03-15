@@ -103,13 +103,6 @@ def read(path):
             if name in child and child['name']:
                 series.append((child['name'], child['number']))
 
-    doc_info = root.find('.//%s' % DOCUMENT_INFO_ELEM)
-    if not doc_info:
-        print >> sys.stderr, 'Could not find document-info for %s' % path
-        print >> sys.stderr, '  elem:', DOCUMENT_INFO_ELEM
-        # dump(root, stream=sys.stderr)
-        return
-
     return {
         'title': title,
         'language': language,
