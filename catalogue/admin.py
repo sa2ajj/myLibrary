@@ -10,6 +10,18 @@ class BookAuthorInline(admin.TabularInline):
 class BookAdmin(admin.ModelAdmin):
     inlines = (BookAuthorInline,)
 
+    fieldsets = (
+        ('UID', {
+            'fields': ('uid_scheme', 'uid'),
+        }),
+        ('Book Info', {
+            'fields': ('title', 'language', 'annotation'),
+        }),
+        ('File', {
+            'fields': ('mimetype', 'file', 'file_stamp')
+        })
+    )
+
 class AuthorAdmin(admin.ModelAdmin):
     inlines = (BookAuthorInline,)
 
