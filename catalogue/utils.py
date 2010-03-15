@@ -15,8 +15,8 @@ def print_info(book_info):
         print ' lang:', safe_text(book_info.language)
         if book_info.series:
             print ' series:'
-            for series in book_info.series:
-                print '  ', safe_text(series)
+            for series, number in book_info.series:
+                print '  %s (#%s)' % (safe_text(series), number)
         if book_info.tags:
             print ' tags:'
             for tag in book_info.tags:
