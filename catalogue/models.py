@@ -16,6 +16,9 @@ class Book(models.Model):
 
     annotation = models.TextField(null=True)
 
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         ordering = [ 'title' ]
         unique_together = (
