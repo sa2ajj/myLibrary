@@ -1,6 +1,7 @@
 
 from os import stat
 from datetime import datetime
+from sha import sha
 
 class BookInfoError(Exception):
     pass
@@ -9,6 +10,8 @@ class BookInfo(object):
     def __init__(self, path):
         self._path = path
         self._stamp = None
+
+        self._fnhash = None
 
     @staticmethod
     def format_name():
@@ -54,6 +57,13 @@ class BookInfo(object):
             self._stamp = datetime.fromtimestamp(info[8])
 
         return self._stamp
+
+    @property
+    def id(self):
+        if self._fnhash is None:
+            self._fnhash = sha(self.path).hexdigest()
+
+        return ('fnhash', self._fnhash)
 
     @property
     def annotation(self):
