@@ -10,12 +10,14 @@ def print_info(book_info):
         for author in book_info.authors:
             print '  ', safe_text(author)
         print ' lang:', safe_text(book_info.language)
-        print ' series:'
-        for series in book_info.series:
-            print '  ', safe_text(series)
-        print ' tags:'
-        for tag in book_info.tags:
-            print '  ', safe_text(tag)
+        if book_info.series:
+            print ' series:'
+            for series in book_info.series:
+                print '  ', safe_text(series)
+        if book_info.tags:
+            print ' tags:'
+            for tag in book_info.tags:
+                print '  ', safe_text(tag)
 
 def update_book(book_info):
     if book_info.valid:
