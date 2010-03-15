@@ -30,6 +30,9 @@ class Author(models.Model):
 
     name = models.CharField(max_length=256, null=False, unique=True)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         ordering = [ 'name' ]
 
@@ -45,6 +48,9 @@ class BookAuthor(models.Model):
 
 class Series(models.Model):
     name = models.CharField(max_length=256, null=False)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = 'Series'
@@ -64,6 +70,9 @@ class BookSeries(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=128, null=False, unique=True)
     parent = models.ForeignKey('self', null=True)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         ordering = [ 'name' ]
