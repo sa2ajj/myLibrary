@@ -35,3 +35,14 @@ def parse_xml(data, dump=False, label=None):
         result = None
 
     return result
+
+def dump(elem, indent=0, stream=sys.stdout):
+    if elem.text:
+        text = ' text: %s' % repr(elem.text)
+    else:
+        text = ''
+
+    print >> stream, '%sdump: %s %s%s' % (' '*indent, elem.tag, elem.attrib, text)
+
+    for child in elem:
+        dump(child, indent+2, stream)
