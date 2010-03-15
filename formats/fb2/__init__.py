@@ -1,5 +1,5 @@
 
-from formats import BookInfo
+from formats import BookInfo, BookInfoError
 
 from formats.fb2.reader import read
 
@@ -61,6 +61,16 @@ class FB2BookInfo(BookInfo):
         self._fail_if_not_valid()
 
         return self._tags
+
+    @property
+    def mimetype(self):
+        if not self.supports(self.path):
+            raise BookInfoError('Mime-type requested for an unsupported file')
+
+        if self.path.endswith('.fb2.zip'):
+            return 'application/fb2+zip'
+        elif self.path.endswith('.fb2'):
+            return 'application/fb2'
 
     @property
     def annotation(self):
