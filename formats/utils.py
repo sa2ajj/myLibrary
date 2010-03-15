@@ -43,6 +43,10 @@ def parse_xml(data, info=False, label=None):
 def dump(elem, indent=0, stream=sys.stdout):
     ''' pretty dumps an ElementTree '''
 
+    if elem is None:
+        print >> stream, 'OOPS: no elem to dump'
+        return
+
     if elem.text:
         text = ' text: %s' % repr(elem.text)
     else:
