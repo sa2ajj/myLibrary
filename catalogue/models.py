@@ -36,6 +36,7 @@ class Author(models.Model):
 class BookAuthor(models.Model):
     book = models.ForeignKey(Book)
     author = models.ForeignKey(Author)
+    position = models.PositiveIntegerField(null=False)
 
     class Meta:
         unique_together = (
