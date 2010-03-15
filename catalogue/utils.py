@@ -54,6 +54,7 @@ def update_book(book_info):
                     language=book_info.language,
                     file=book_info.path,
                     file_stamp=book_info.stamp,
+                    mimetype=book_info.mimeype,
                     annotation=book_info.annotation
                 )
             else:
@@ -63,6 +64,7 @@ def update_book(book_info):
                 book.language=book_info.language
                 book.file=book_info.path
                 book.file_stamp=book_info.stamp
+                book.mimetype=book_info.mimeype
                 book.annotation=book_info.annotation
 
                 for author in book.bookauthor_set.all():

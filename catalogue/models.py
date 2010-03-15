@@ -14,6 +14,8 @@ class Book(models.Model):
     file = models.TextField(null=False)
     file_stamp = models.DateTimeField()
 
+    mimetype = models.CharField(max_length=128, null=False)
+
     annotation = models.TextField(null=True)
 
     def __unicode__(self):
