@@ -2,6 +2,7 @@
 import sys
 
 from formats.utils import parse_xml, get_good_zip, dump
+from formats.fb2.genres import normalize_tag
 
 FB2_NS = 'http://www.gribuser.ru/xml/fictionbook/2.0'
 
@@ -45,6 +46,9 @@ def person2str(elem):
 
 def tag2tag(elem):
     return strip_text(elem.text)
+
+def normalize_tags(tags):
+    return [ normalize_tag(x) for x in tags ]
 
 def read(path):
     if path.endswith('.fb2.zip'):
@@ -108,7 +112,7 @@ def read(path):
         'language': language,
         'authors': authors,
         'series': series,
-        'tags': tags,
+        'tags': normalize_tags(tags),
         'annotation': annotation,
     }
 
