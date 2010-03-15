@@ -7,6 +7,7 @@ def safe_text(text):
 
 def print_info(book_info):
     if book_info.valid:
+        print 'file:', book_info.path
         print ' title:', safe_text(book_info.title)
         print ' authors:'
         for author in book_info.authors:
@@ -20,6 +21,8 @@ def print_info(book_info):
             print ' tags:'
             for tag in book_info.tags:
                 print '  ', safe_text(tag)
+    else:
+        print '%s is invalid' % book_info.path
 
 def update_book(book_info):
     book_id = book_info.id
