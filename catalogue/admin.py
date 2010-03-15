@@ -36,7 +36,10 @@ class AuthorAdmin(admin.ModelAdmin):
 class SeriesAdmin(admin.ModelAdmin):
     inlines = (BookSeriesInline,)
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Series, SeriesAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag, TagAdmin)
