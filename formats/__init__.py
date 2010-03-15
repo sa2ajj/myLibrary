@@ -23,6 +23,9 @@ class BookInfo(object):
     def supports(filename):
         raise BookInfoNotImplemented
 
+    def validate(self):
+        raise BookInfoNotImplemented
+
     @property
     def valid(self):
         raise BookInfoNotImplemented
