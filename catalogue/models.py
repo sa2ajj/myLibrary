@@ -1,5 +1,11 @@
 from django.db import models
 
+class BookFormat(models.Model):
+    name = models.CharField(max_length=128, null=False, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
 class Book(models.Model):
     ''' ... '''
 
@@ -15,6 +21,8 @@ class Book(models.Model):
     file_stamp = models.DateTimeField()
 
     mimetype = models.CharField(max_length=128, null=False)
+
+    format = models.ForeignKey(BookFormat, null=False)
 
     annotation = models.TextField(null=True)
 

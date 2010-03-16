@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from myLibrary.catalogue.models import Book, Author, Series, Tag
+from myLibrary.catalogue.models import BookFormat, Book, Author, Series, Tag
 from myLibrary.catalogue.models import BookAuthor, BookSeries, BookTag
 
 class BookAuthorInline(admin.TabularInline):
@@ -24,7 +24,7 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('title', 'language', 'annotation'),
         }),
         ('File', {
-            'fields': ('mimetype', 'file', 'file_stamp')
+            'fields': ('file', 'file_stamp', 'mimetype', 'format')
         })
     )
 
@@ -41,6 +41,7 @@ class SeriesAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
+admin.site.register(BookFormat)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Series, SeriesAdmin)

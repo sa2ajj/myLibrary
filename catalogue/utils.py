@@ -1,6 +1,6 @@
 #
 
-from catalogue.models import Book, Author, BookAuthor, Series, BookSeries, Tag, BookTag
+from catalogue.models import BookFormat, Book, Author, BookAuthor, Series, BookSeries, Tag, BookTag
 
 def safe_text(text):
     return text.encode('utf-8')
@@ -50,6 +50,7 @@ def update_book(book_info):
                 print_info(book_info)
 
             if mode == 'read':
+                format, _ = BookFormat.objects.get_or_create(name=book_info.format_name())
                 book = Book(
                     uid=book_id[1],
                     uid_scheme=book_id[0],
@@ -58,9 +59,11 @@ def update_book(book_info):
                     file=book_info.path,
                     file_stamp=book_info.stamp,
                     mimetype=book_info.mimetype,
+                    format=format,
                     annotation=book_info.annotation
                 )
             else:
+                # it is assumed that book format does not change
                 book.uid=book_id[1]
                 book.uid_scheme=book_id[0]
                 book.title=book_info.title
