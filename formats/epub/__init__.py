@@ -2,9 +2,7 @@
 import sys
 
 from formats import BookInfo, BookInfoError
-from formats.utils import parse_xml, get_good_zip
-
-CONTAINER = 'META-INF/container.xml'
+from formats.epub.reader import read
 
 class EpubBookInfo(BookInfo):
     def __init__(self, path):
@@ -93,17 +91,4 @@ class EpubBookInfo(BookInfo):
 
             self._valid = True
 
-    def read(self):
-        archive = get_good_zip(self.path)
-
-        try:
-            container = archive.read(CONTAINER)
-        except KeyError:
-            print >> sys.stderr, '%s has no container' % self.path
-            return
-
-        container = parse_xml(container)
-
-        if container is None:
-            print >> sys.stderr, '%s has invalid container' % self.path
-            return
+# vim:ts=4:sw=4:et
