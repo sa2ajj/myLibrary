@@ -48,7 +48,7 @@ def tag2tag(elem):
     return strip_text(elem.text)
 
 def normalize_tags(tags):
-    return [ normalize_tag(x) for x in tags ]
+    return list(set([ normalize_tag(x) for x in tags ]))
 
 def read(path):
     if path.endswith('.fb2.zip'):
