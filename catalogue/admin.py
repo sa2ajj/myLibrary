@@ -34,6 +34,8 @@ class AuthorAdmin(admin.ModelAdmin):
     inlines = (BookAuthorInline,)
 
 class SeriesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
     inlines = (BookSeriesInline,)
 
 class TagAdmin(admin.ModelAdmin):
