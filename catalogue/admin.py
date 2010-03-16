@@ -11,10 +11,14 @@ class BookSeriesInline(admin.TabularInline):
     model = BookSeries
     extra = 1
 
+class BookTagInline(admin.TabularInline):
+    model = BookTag
+    extra = 1
+
 class BookAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
 
-    inlines = (BookAuthorInline, BookSeriesInline)
+    inlines = (BookAuthorInline, BookSeriesInline, BookTagInline)
 
     fieldsets = (
         ('UID', {
