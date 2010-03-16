@@ -97,3 +97,5 @@ def normalize_tag(tag):
         return tag
 
     return _genres.get(tag, tag)
+
+# vim:ts=4:sw=4:et

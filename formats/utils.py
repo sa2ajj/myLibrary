@@ -56,3 +56,5 @@ def dump(elem, indent=0, stream=sys.stdout):
 
     for child in elem:
         dump(child, indent+2, stream)
+
+# vim:ts=4:sw=4:et
