@@ -80,7 +80,7 @@ class EpubBookInfo(BookInfo):
         if not self.supports(self.path):
             return
 
-        result = self.read()
+        result = read(self.path)
 
         if result is not None:
             for name, value in result.iteritems():
