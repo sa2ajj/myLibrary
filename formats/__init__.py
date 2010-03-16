@@ -5,6 +5,8 @@ from os import stat
 from datetime import datetime
 from sha import sha
 
+__all__ = [ 'BookInfoError', 'BookInfo', 'BookReader' ]
+
 class BookInfoError(Exception):
     ''' exception '''
     pass
