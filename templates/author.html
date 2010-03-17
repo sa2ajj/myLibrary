@@ -2,6 +2,8 @@
 
 {% block title %}Author: {{ author.name }}{% endblock %}
 
+{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; <a href="/author">Authors</a> &rsaquo; {{ author.name }}{% endblock %}
+
 {% block body %}<h1>{{ author.name }}</h1>
 <table border="1">
   <tr>
