@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; Books{% endblock %}
+
+{% block body %}<h1>Books</h1>
+<table border="1">
+  <tr>
+    <td>Title</td><td>Download</td>
+  </tr>
+  {% for book in books %}<tr>
+    <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}">file</a></td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=4:sw=4:et:filetype=htmldjango
+  -->

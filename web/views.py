@@ -16,6 +16,11 @@ def _validate_id(id):
 def index(request):
     return HttpResponse('Index for the catalogue (web)')
 
+def list_books(request):
+    books = Book.objects.order_by('title')
+
+    return render_to_response('books.html', dict(books=books))
+
 def show_book(request, id):
     id = _validate_id(id)
 
