@@ -5,5 +5,6 @@ urlpatterns = patterns('myLibrary.web.views',
     (r'^book$', 'list_books'),
     (r'^book/(?P<id>.+)$', 'show_book'),
     (r'^file/(?P<id>.+)$', 'download_file'),
+    (r'^author$', 'list_authors'),
     (r'^author/(?P<id>.+)$', 'show_author')
 )

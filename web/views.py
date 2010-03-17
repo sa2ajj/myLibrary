@@ -55,6 +55,11 @@ def download_file(request, id):
 
     return response
 
+def list_authors(request):
+    authors = Author.objects.order_by('name')
+
+    return render_to_response('authors.html', dict(authors=authors))
+
 def show_author(request, id):
     id = _validate_id(id)
 
