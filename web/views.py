@@ -3,7 +3,7 @@ import os
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed, HttpResponseServerError
 from django.shortcuts import get_object_or_404, render_to_response
 
-from catalogue.models import Book, BookAuthor, BookTag, Author
+from catalogue.models import Book, Author
 
 def _validate_id(id):
     try:
@@ -26,8 +26,8 @@ def show_book(request, id):
 
     book = get_object_or_404(Book, id=id)
 
-    authors = [ x.author for x in BookAuthor.objects.filter(book=book).order_by('position') ]
-    tags = [ x.tag for x in BookTag.objects.filter(book=book).order_by('tag__name') ]
+    authors = [ x.author for x in book.bookauthor_set.order_by('position') ]
+    tags = [ x.tag for x in book.booktag_set.order_by('tag__name') ]
 
     return render_to_response('book.html', dict(book=book, authors=authors, tags=tags))
 
@@ -60,7 +60,7 @@ def show_author(request, id):
 
     author = get_object_or_404(Author, id=id)
 
-    books = [ x.book for x in BookAuthor.objects.filter(author=author).order_by('book__title') ]
+    books = [ x.book for x in author.bookauthor_set.order_by('book__title') ]
 
     return render_to_response('author.html', dict(author=author, books=books))
 
