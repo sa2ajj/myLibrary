@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Book: {{ book.title }}{% endblock %}
+
+{% block body %}<h1>{{ book.title }}</h1>
+<p>by {% for author in authors %}{% if not forloop.first %}, {% endif %}<a href="/author/{{ author.id }}">{{ author.name }}</a>{% endfor %}</p>
+<p>lang: {{ book.language }}</p>
+<p>tags: {% for tag in tags %}{% if not forloop.first %}, {% endif %}<a href="/tag/{{ tag.id }}">{{ tag.name }}</a>{% endfor %}</p>
+<p><a href="/file/{{ book.id }}">download</a></p>
+{% if book.annotation %}<h2>Annotation</h2><p>{{ book.annotation }}</p>{% endif %}
+{% endblock %}
+
+<!--
+  vim:ts=4:sw=4:et:filetype=htmldjango
+  -->
