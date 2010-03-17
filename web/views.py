@@ -14,7 +14,7 @@ def _validate_id(id):
     return id
 
 def index(request):
-    return HttpResponse('Index for the catalogue (web)')
+    return render_to_response('home.html')
 
 def list_books(request):
     books = Book.objects.order_by('title')
