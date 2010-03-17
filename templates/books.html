@@ -10,7 +10,7 @@
     <td>Title</td><td>Download</td>
   </tr>
   {% for book in books %}<tr>
-    <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}">file</a></td>
+    <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}"><img src="/static/download.png" alt="download"/></a></td>
   </tr>{% endfor %}
 </table>
 {% endblock %}
