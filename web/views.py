@@ -3,14 +3,19 @@ from django.shortcuts import get_object_or_404, render_to_response
 
 from catalogue.models import Book, BookAuthor, BookTag
 
-def index(request):
-    return HttpResponse('Index for the catalogue (web)')
-
-def show_book(request, id):
+def _validate_id(id):
     try:
         id = int(id)
     except ValueError:
         raise Http404, 'Invalid book id'
+
+    return id
+
+def index(request):
+    return HttpResponse('Index for the catalogue (web)')
+
+def show_book(request, id):
+    id = _validate_id(id)
 
     book = get_object_or_404(Book, id=id)
 
