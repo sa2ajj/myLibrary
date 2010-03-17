@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Author: {{ author.name }}{% endblock %}
+
+{% block body %}<h1>{{ author.name }}</h1>
+<table border="1">
+  <tr>
+    <td>Title</td><td>Download</td>
+  </tr>
+  {% for book in books %}<tr>
+    <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}">file</a></td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=2:sw=2:et:filetype=htmldjango
+  -->

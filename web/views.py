@@ -3,7 +3,7 @@ import os
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed, HttpResponseServerError
 from django.shortcuts import get_object_or_404, render_to_response
 
-from catalogue.models import Book, BookAuthor, BookTag
+from catalogue.models import Book, BookAuthor, BookTag, Author
 
 def _validate_id(id):
     try:
@@ -49,5 +49,14 @@ def download_file(request, id):
     response.write(data)
 
     return response
+
+def show_author(request, id):
+    id = _validate_id(id)
+
+    author = get_object_or_404(Author, id=id)
+
+    books = [ x.book for x in BookAuthor.objects.filter(author=author).order_by('book__title') ]
+
+    return render_to_response('author.html', dict(author=author, books=books))
 
 # vim:ts=4:sw=4:et
