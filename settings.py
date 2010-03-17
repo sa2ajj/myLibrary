@@ -2,8 +2,12 @@
 
 import os
 
+ROOT_PATH = os.path.dirname(__file__)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+SERVE_MEDIA = True
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -37,7 +41,7 @@ USE_I18N = False
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'static/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -66,7 +70,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'myLibrary.urls'
-ROOT_PATH = os.path.dirname(__file__)
 
 TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'templates')
