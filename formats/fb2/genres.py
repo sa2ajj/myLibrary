@@ -10,18 +10,13 @@ class FB2Genres:
         self._genres = {}
         self._aliases = {}
 
-    def get(self, genre, *args):
-        assert len(args) <= 1
-
+    def get(self, genre):
         if genre in self._genres:
-            return self._genres[genre][1]
+            return self._genres[genre]
         elif genre in self._aliases:
             return self.get(self._aliases[genre])
         else:
-            if len(args) == 1:
-                return args[0]
-            else:
-                return KeyError, genre
+            raise KeyError, genre
 
     def add_genre(self, genre, parent, title):
         self._genres[genre] = (parent, title)
@@ -96,6 +91,16 @@ def normalize_tag(tag):
     if _genres is None:
         return tag
 
-    return _genres.get(tag, tag)
+    try:
+        result = []
+
+        while tag is not None:
+            tag, title = _genres.get(tag)
+
+            result.insert(0, title)
+
+        return '/'.join(result)
+    except KeyError:
+        return tag
 
 # vim:ts=4:sw=4:et
