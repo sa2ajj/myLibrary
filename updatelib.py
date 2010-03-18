@@ -2,7 +2,7 @@
 
 import os
 
-from formats import BookReader
+from formats import scan_dir
 from catalogue.utils import update_book
 
 from pprint import pprint
@@ -10,15 +10,8 @@ from pprint import pprint
 LIB_DIR = '/Downloads/Books'
 
 def main():
-    reader = BookReader()
-
-    for path, _, filenames in os.walk(LIB_DIR):
-        for filename in filenames:
-            fullpath = os.path.join(path, filename)
-
-            if reader.supports(fullpath):
-                info = reader.info(fullpath)
-                update_book(info)
+    for info in scan_dir(LIB_DIR, 'fb2'):
+        update_book(info)
 
 if __name__ == '__main__':
     main()

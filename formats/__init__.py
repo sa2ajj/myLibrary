@@ -1,7 +1,7 @@
 
 ''' base for various book formats '''
 
-from os import stat
+import os
 from datetime import datetime
 from sha import sha
 
@@ -92,7 +92,7 @@ class BookInfo(object):
     def stamp(self):
         ''' last modified stamp '''
         if self._stamp is None:
-            info = stat(self._path)
+            info = os.stat(self._path)
 
             self._stamp = datetime.fromtimestamp(info[8])
 
@@ -114,35 +114,31 @@ class BookInfo(object):
         ''' book's annotation '''
         raise BookInfoNotImplemented
 
-class BookReader:
-    def __init__(self):
-        self._formats = []
+def scan_dir(dirname, *formats):
+    ''' scans the specified directory for books in the specified formats '''
 
-        self._support_all()
+    from formats.fb2 import FB2BookInfo
+    from formats.epub import EpubBookInfo
 
-    def _support(self, format):
-        assert issubclass(format, BookInfo)
+    known_formats = [ FB2BookInfo, EpubBookInfo ]
 
-        self._formats.append(format)
+    if not formats:
+        supported = known_formats
+    else:
+        formats = [ x.lower() for x in formats ]
+        supported = [ x for x in known_formats if x.format_name().lower() in formats ]
 
-    def _support_all(self):
-        from formats.fb2 import FB2BookInfo
-        from formats.epub import EpubBookInfo
+    for path, _, filenames in os.walk(dirname):
+        for filename in filenames:
+            book_info = None
 
-        self._support(FB2BookInfo)
-        self._support(EpubBookInfo)
+            for format in supported:
+                if format.supports(filename):
+                    book_info = format
+                    break
 
-    def supports(self, filename):
-        return len([ format for format in self._formats if format.supports(filename) ]) > 0
-
-    def info(self, filename):
-        book_info = None
-
-        for format in self._formats:
-            if format.supports(filename):
-                book_info = format(filename)
-                break
-
-        return book_info
+            if book_info is not None:
+                fullpath = os.path.join(path, filename)
+                yield book_info(fullpath)
 
 # vim:ts=4:sw=4:et
