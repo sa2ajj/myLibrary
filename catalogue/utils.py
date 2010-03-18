@@ -97,7 +97,13 @@ def update_book(book_info):
                 bookseries.save()
 
             for tag in book_info.tags:
-                db_tag, _ = Tag.objects.get_or_create(name=tag)
+                if '/' in tag:
+                    db_tag = None
+
+                    for name in [ x.strip() for x in tag.split('/') ]:
+                        db_tag, _ = Tag.objects.get_or_create(name=name, parent=db_tag)
+                else:
+                    db_tag, _ = Tag.objects.get_or_create(name=tag)
 
                 booktag = BookTag(book=book, tag=db_tag)
                 booktag.save()

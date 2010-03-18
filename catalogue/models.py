@@ -78,7 +78,7 @@ class BookSeries(models.Model):
         )
 
 class Tag(models.Model):
-    name = models.CharField(max_length=128, null=False, unique=True)
+    name = models.CharField(max_length=128, null=False)
     parent = models.ForeignKey('self', null=True)
 
     def __unicode__(self):
@@ -86,6 +86,9 @@ class Tag(models.Model):
 
     class Meta:
         ordering = [ 'name' ]
+        unique_together = (
+            ('name', 'parent'),
+        )
 
 class BookTag(models.Model):
     book = models.ForeignKey(Book)
