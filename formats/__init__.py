@@ -99,7 +99,7 @@ class BookInfo(object):
         return self._stamp
 
     @property
-    def id(self):
+    def book_id(self):
         ''' book id
 
         format: (<id schema>, <id>)

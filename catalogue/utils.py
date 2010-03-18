@@ -25,7 +25,7 @@ def print_info(book_info):
         print '%s is invalid' % book_info.path
 
 def update_book(book_info):
-    book_id = book_info.id
+    book_id = book_info.book_id
 
     books = Book.objects.filter(uid=book_id[1], uid_scheme=book_id[0])
 
