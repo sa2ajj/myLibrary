@@ -5,7 +5,8 @@
 {% block breadcrumbs %}<a href="/">Home</a> &rsaquo; <a href="/tag">Tags</a> &rsaquo; {% for parent in tag_path %}<a href="/tag/{{ parent.id }}">{{ parent.name }}</a> &rsaquo; {% endfor %}{{ tag }}{% endblock %}
 
 {% block body %}<h1>{{ tag }}</h1>
-{% if subtags %}<table border="1">
+{% if subtags %}<h2>Sub-tags</h2>
+<table border="1">
   <tr>
     <td>Name</td><td>Books</td><td>Subtags</td>
   </tr>
@@ -14,6 +15,7 @@
   </tr>{% endfor %}
 </table>{% endif %}
 
+{% if books %}<h2>Books</h2>
 <table border="1">
   <tr>
     <td>Title</td><td>Download</td>
@@ -21,7 +23,7 @@
   {% for book in books %}<tr>
     <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}"><img src="/static/download.png" alt="download"/></a></td>
   </tr>{% endfor %}
-</table>
+</table>{% endif %}
 {% endblock %}
 
 <!--
