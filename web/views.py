@@ -113,4 +113,13 @@ def list_series(request):
 
     return render_to_response('all-series.html', dict(series=series))
 
+def show_series(request, id):
+    id = _validate_id(id)
+
+    series = Series.objects.get(id=id)
+
+    books = [ (x.number, x.book) for x in series.bookseries_set.order_by('number') ]
+
+    return render_to_response('series.html', dict(series=series, books=books))
+
 # vim:ts=4:sw=4:et

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Series: {{ series.name }}{% endblock %}
+
+{% block breadcrumbs %} &rsaquo; <a href="/series">Series</a> &rsaquo; {{ series.name }}{% endblock %}
+
+{% block body %}<h1>{{ series.name }}</h1>
+<table border="1">
+  <tr>
+    <td>Position</td><td>Title</td>
+  </tr>
+  {% for book in books %}<tr>
+    <td>{{ book.0 }}<td><a href="/file/{{ book.1.id }}"><img src="/static/download.png" alt="download"/></a><a href="/book/{{ book.1.id }}">{{ book.1.title }}</a></td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=2:sw=2:et:filetype=htmldjango
+  -->
