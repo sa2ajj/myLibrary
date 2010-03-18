@@ -85,12 +85,19 @@ def list_tags(request):
 def show_tag(request, id):
     if id == 'none':
         tag = '<no tag>'
-        subtags = []
+        subtags, tag_path = [], []
         books = Book.objects.filter(booktag=None)
     else:
         id = _validate_id(id)
 
         tag = get_object_or_404(Tag, id=id)
+
+        tag_path = []
+        parent = tag.parent
+
+        while parent is not None:
+            tag_path.insert(0, parent)
+            parent = parent.parent
 
         subtags = [
             (x.id, x.name, x.booktag_set.count(), Tag.objects.filter(parent=x).count()) \
@@ -98,6 +105,6 @@ def show_tag(request, id):
         ]
         books = [ x.book for x in tag.booktag_set.order_by('book__title') ]
 
-    return render_to_response('tag.html', dict(tag=tag, subtags=subtags, books=books))
+    return render_to_response('tag.html', dict(tag=tag, subtags=subtags, books=books, tag_path=tag_path))
 
 # vim:ts=4:sw=4:et
