@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Tag: {{ author.name }}{% endblock %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; <a href="/tag">Tags</a> &rsaquo; {{ tag }}{% endblock %}
+
+{% block body %}<h1>{{ tag }}</h1>
+{% if subtags %}<table border="1">
+  <tr>
+    <td>Name</td><td>Books</td><td>Subtags</td>
+  </tr>
+  {% for subtag in subtags %}<tr>
+    <td><a href="/tag/{{ subtag.0 }}">{{ subtag.1 }}</a></td><td>{{ subtag.2 }}</td><td>{{ subtag.3 }}</td>
+  </tr>{% endfor %}
+</table>{% endif %}
+
+<table border="1">
+  <tr>
+    <td>Title</td><td>Download</td>
+  </tr>
+  {% for book in books %}<tr>
+    <td><a href="/book/{{ book.id }}">{{ book.title }}</a></td><td><a href="/file/{{ book.id }}"><img src="/static/download.png" alt="download"/></a></td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=2:sw=2:et:filetype=htmldjango
+  -->

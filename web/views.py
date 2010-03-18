@@ -82,4 +82,22 @@ def list_tags(request):
 
     return render_to_response('tags.html', dict(tags=tags))
 
+def show_tag(request, id):
+    if id == 'none':
+        tag = '<no tag>'
+        subtags = []
+        books = Book.objects.filter(booktag=None)
+    else:
+        id = _validate_id(id)
+
+        tag = get_object_or_404(Tag, id=id)
+
+        subtags = [
+            (x.id, x.name, x.booktag_set.count(), Tag.objects.filter(parent=x).count()) \
+                for x in Tag.objects.filter(parent=tag).order_by('name')
+        ]
+        books = [ x.book for x in tag.booktag_set.order_by('book__title') ]
+
+    return render_to_response('tag.html', dict(tag=tag, subtags=subtags, books=books))
+
 # vim:ts=4:sw=4:et
