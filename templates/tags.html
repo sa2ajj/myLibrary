@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; Tags{% endblock %}
+
+{% block body %}<h1>Tags</h1>
+<table border="1">
+  <tr>
+    <td>Name</td><td>Books</td><td>Subtags</td>
+  </tr>
+  {% for tag in tags %}<tr>
+    <td><a href="/tag/{{ tag.0 }}">{{ tag.1 }}</a></td><td>{{ tag.2 }}</td><td>{{ tag.3 }}</td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=4:sw=4:et:filetype=htmldjango
+  -->
