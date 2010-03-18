@@ -2,7 +2,7 @@
 
 {% block title %}Book: {{ book.title }}{% endblock %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; <a href="/book">Books</a> &rsaquo; {{ book.title }}{% endblock %}
+{% block breadcrumbs %} &rsaquo; <a href="/book">Books</a> &rsaquo; {{ book.title }}{% endblock %}
 
 {% block body %}<h1>{{ book.title }}</h1>
 <p>by {% for author in authors %}{% if not forloop.first %}, {% endif %}<a href="/author/{{ author.id }}">{{ author.name }}</a>{% endfor %}</p>

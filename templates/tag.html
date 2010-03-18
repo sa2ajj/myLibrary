@@ -2,7 +2,7 @@
 
 {% block title %}Tag: {{ author.name }}{% endblock %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rsaquo; <a href="/tag">Tags</a> &rsaquo; {% for parent in tag_path %}<a href="/tag/{{ parent.id }}">{{ parent.name }}</a> &rsaquo; {% endfor %}{{ tag }}{% endblock %}
+{% block breadcrumbs %} &rsaquo; <a href="/tag">Tags</a> &rsaquo; {% for parent in tag_path %}<a href="/tag/{{ parent.id }}">{{ parent.name }}</a> &rsaquo; {% endfor %}{{ tag }}{% endblock %}
 
 {% block body %}<h1>{{ tag }}</h1>
 {% if subtags %}<h2>Sub-tags</h2>
