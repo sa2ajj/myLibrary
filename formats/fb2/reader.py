@@ -100,7 +100,9 @@ def read(path):
         elif child.tag == TITLE_ELEM:
             title = strip_text(child.text)
         elif child.tag == TAG_ELEM:
-            tags.append(tag2tag(child))
+            tag = tag2tag(child)
+            if tag:     # add only non-empty tags
+                tags.append(tag)
         elif child.tag == LANG_ELEM:
             language = strip_text(child.text)
         elif child.tag == SERIES_ELEM:
