@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Series{% endblock %}
+
+{% block breadcrumbs %} &rsaquo; Series{% endblock %}
+
+{% block body %}<h1>Series</h1>
+<table border="1">
+  <tr>
+    <td>Name</td><td>Books</td>
+  </tr>
+  {% for item in series %}<tr>
+    <td><a href="/series/{{ item.id }}">{{ item.name }}</a></td><td>{{ item.bookseries_set.count }}</td>
+  </tr>{% endfor %}
+</table>
+{% endblock %}
+
+<!--
+  vim:ts=4:sw=4:et:filetype=htmldjango
+  -->
