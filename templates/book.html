@@ -7,6 +7,7 @@
 {% block body %}<h1>{{ book.title }}</h1>
 <p>by {% for author in authors %}{% if not forloop.first %}, {% endif %}<a href="/author/{{ author.id }}">{{ author.name }}</a>{% endfor %}</p>
 <p>lang: {{ book.language }}</p>
+{% if book.bookseries_set %}<p>Series: {% for series in book.bookseries_set.all %}{% if not forloop.first %}, {% endif %}<a href="/series/{{ series.series.id}}">{{ series.series.name }}</a> (#{{ series.number }}){% endfor %}{% endif %}
 <p>tags: {% for tag in tags %}{% if not forloop.first %}, {% endif %}<a href="/tag/{{ tag.id }}">{{ tag.name }}</a>{% endfor %}</p>
 <p>download: <a href="/file/{{ book.id }}"><img src="/static/download.png" alt="download"/></a></p>
 {% if book.annotation %}<h2>Annotation</h2><p>{{ book.annotation }}</p>{% endif %}
