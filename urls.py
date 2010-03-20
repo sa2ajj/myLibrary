@@ -21,3 +21,6 @@ if settings.SERVE_MEDIA:
         (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )
 
+urlpatterns += patterns('',
+    ('^(?P<what>.*)$', 'views.bad')
+)
