@@ -1,0 +1,8 @@
+
+ZeroConf
+========
+
+Publish the service of type ``_fbreader_library._tcp`` with only one ``TXT``
+record::
+
+    info=<URL to info.xml>
