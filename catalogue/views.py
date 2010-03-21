@@ -1,4 +1,8 @@
 from django.http import HttpResponse
 
+from catalogue.feeds import Feed, FeedItemFeed
+
 def index(request):
-    return HttpResponse('Index for the catalogue')
+    feed = Feed(request.build_absolute_uri(), 'Index for the catalogue')
+
+    return HttpResponse(unicode(feed), mimetype=feed.mimetype)
