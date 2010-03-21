@@ -52,7 +52,12 @@ def dump(elem, indent=0, stream=sys.stdout):
     else:
         text = ''
 
-    print >> stream, '%sdump: %s %s%s' % (' '*indent, elem.tag, elem.attrib, text)
+    if elem.tail:
+        tail = ' tail: %s' % repr(elem.tail)
+    else:
+        tail = ''
+
+    print >> stream, '%sdump: %s %s%s%s' % (' '*indent, elem.tag, elem.attrib, text, tail)
 
     for child in elem:
         dump(child, indent+2, stream)
