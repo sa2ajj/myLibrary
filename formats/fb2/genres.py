@@ -1,7 +1,7 @@
 
 import os, sys
 
-from formats.utils import parse_xml, dump
+from xmlutils import parse_xml, dump
 
 _genres = None
 

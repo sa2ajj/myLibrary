@@ -1,8 +1,9 @@
 
 import sys
 
-from formats.utils import parse_xml, get_good_zip, dump
+from formats.utils import get_good_zip
 from formats.fb2.genres import normalize_tag
+from xmlutils import parse_xml, dump
 
 FB2_NS = 'http://www.gribuser.ru/xml/fictionbook/2.0'
 
