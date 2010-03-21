@@ -2,7 +2,8 @@
 ZeroConf
 ========
 
-Publish the service of type ``_fbreader_library._tcp`` with only one ``TXT``
-record::
+Publish the service of type ``_http._tcp`` (a usual web server) with only two ``TXT``
+records::
 
-    info=<URL to info.xml>
+    path=<PATH to browsable pages>
+    fbreader=<URL to info.xml for FBReader>
