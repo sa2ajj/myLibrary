@@ -2,25 +2,25 @@
 
 from catalogue.models import BookFormat, Book, Author, BookAuthor, Series, BookSeries, Tag, BookTag
 
-def safe_text(text):
+def _safe_text(text):
     return text.encode('utf-8')
 
 def print_info(book_info):
     if book_info.valid:
         print 'file:', book_info.path
-        print ' title:', safe_text(book_info.title)
+        print ' title:', _safe_text(book_info.title)
         print ' authors:'
         for author in book_info.authors:
-            print '  ', safe_text(author)
-        print ' lang:', safe_text(book_info.language)
+            print '  ', _safe_text(author)
+        print ' lang:', _safe_text(book_info.language)
         if book_info.series:
             print ' series:'
             for series, number in book_info.series:
-                print '   %s (#%s)' % (safe_text(series), number)
+                print '   %s (#%s)' % (_safe_text(series), number)
         if book_info.tags:
             print ' tags:'
             for tag in book_info.tags:
-                print '  ', safe_text(tag)
+                print '  ', _safe_text(tag)
     else:
         print '%s is invalid' % book_info.path
 
