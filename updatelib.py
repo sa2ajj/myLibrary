@@ -7,16 +7,28 @@ It can work in two modes:
     * display the information about found books
 """
 
-from formats import scan_dir
-from catalogue.utils import update_book
+from optparse import OptionParser
 
-LIB_DIR = '/Downloads/Books'
+from formats import scan_dir
+from catalogue.utils import update_book, print_info
 
 def main():
     """main worker"""
 
-    for info in scan_dir(LIB_DIR, 'fb2'):
-        update_book(info)
+    parser = OptionParser()
+
+    parser.add_option('-p', '--print-only', action='store_true', dest='show', default=False)
+    parser.add_option('-f', '--format', action='append', dest='formats', default=[])
+
+    options, dirs = parser.parse_args()
+
+    for dirname in dirs:
+        for info in scan_dir(dirname, *options.formats):
+            if options.show:
+                info.validate()
+                print_info(info)
+            else:
+                update_book(info)
 
 if __name__ == '__main__':
     main()
