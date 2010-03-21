@@ -12,7 +12,7 @@ for filename in (
 
     print 'Processing:', book.path
     print '  last modified:', book.stamp
-    print '  id:', book.id
+    print '  id:', book.book_id
 
     book.validate()
 
@@ -30,7 +30,7 @@ for filename in (
 
     print 'Processing:', book.path
     print '  last modified:', book.stamp
-    print '  id:', book.id
+    print '  id:', book.book_id
 
     book.validate()
 
