@@ -11,8 +11,6 @@ class BookInfoError(Exception):
     ''' exception '''
     pass
 
-BookInfoNotImplemented = BookInfoError('Not implemented')
-
 class BookInfo(object):
     ''' abstract book information class '''
 
@@ -22,22 +20,22 @@ class BookInfo(object):
 
         self._fnhash = None
 
-    @staticmethod
-    def format_name():
+    @classmethod
+    def format_name(cls):
         ''' human readable format name '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'format_name is not defined in %s' % cls.__name__
 
-    @staticmethod
-    def supports(filename):
+    @classmethod
+    def supports(cls, filename):
         ''' checks whether a file is supported
 
         (usually based on file extension)
         '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'supports is not defined in %s' % cls.__name__
 
     def validate(self):
         ''' reads and validates the book at self._path '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'supports is not defined in %s' % self.__class__.__name__
 
     @property
     def valid(self):
@@ -45,17 +43,17 @@ class BookInfo(object):
 
         (in other words, whether the properties below would give a valid value
         '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'valid is not defined in %s' % self.__class__.__name__
 
     @property
     def language(self):
         ''' the book language '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'language is not defined in %s' % self.__class__.__name__
 
     @property
     def title(self):
         ''' the book title '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'title is not defined in %s' % self.__class__.__name__
 
     @property
     def authors(self):
@@ -63,7 +61,7 @@ class BookInfo(object):
 
         order is important
         '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'authors is not defined in %s' % self.__class__.__name__
 
     @property
     def series(self):
@@ -71,17 +69,17 @@ class BookInfo(object):
 
         format: [ (<series name>, <series #>), ... ]
         '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'series is not defined in %s' % self.__class__.__name__
 
     @property
     def tags(self):
         ''' list of tags for the book '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'tags is not defined in %s' % self.__class__.__name__
 
     @property
     def mimetype(self):
         ''' mime type for the book's file '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'mimetype is not defined in %s' % self.__class__.__name__
 
     @property
     def path(self):
@@ -112,7 +110,7 @@ class BookInfo(object):
     @property
     def annotation(self):
         ''' book's annotation '''
-        raise BookInfoNotImplemented
+        raise NotImplementedError, 'annotation is not defined in %s' % self.__class__.__name__
 
 def scan_dir(dirname, *formats):
     ''' scans the specified directory for books in the specified formats '''
