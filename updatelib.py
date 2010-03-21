@@ -12,6 +12,8 @@ from optparse import OptionParser
 from formats import scan_dir
 from catalogue.utils import update_book, print_info
 
+DEFAULT_FORMATS = [ 'fb2' ]
+
 def main():
     """main worker"""
 
@@ -21,6 +23,9 @@ def main():
     parser.add_option('-f', '--format', action='append', dest='formats', default=[])
 
     options, dirs = parser.parse_args()
+
+    if not options.formats:
+        options.formats = DEFAULT_FORMATS
 
     for dirname in dirs:
         for info in scan_dir(dirname, *options.formats):
