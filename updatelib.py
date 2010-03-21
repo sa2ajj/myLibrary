@@ -10,7 +10,7 @@ It can work in two modes:
 from optparse import OptionParser
 
 from formats import scan_dir
-from catalogue.utils import update_book, print_info
+from catalogue.tools import update_book, print_info
 
 DEFAULT_FORMATS = [ 'fb2' ]
 

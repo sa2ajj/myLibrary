@@ -3,7 +3,7 @@
 
 from formats.fb2 import FB2BookInfo
 from formats.epub import EpubBookInfo
-from catalogue.utils import print_info
+from catalogue.tools import print_info
 
 for filename in (
         '/Downloads/Books/other/Books/Vadim Panov/9- Кафедра странников/panov_tayiniyyi_gorod_9_kafedra_strannikov.fb2.zip',
