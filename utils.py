@@ -27,7 +27,7 @@ class LocalTimezone(tzinfo):
     def utcoffset(self, dst):
         """return difference between the timezone and UTC"""
 
-        if self._isdst(dst):
+        if _isdst(dst):
             return DSTOFFSET
         else:
             return STDOFFSET
@@ -35,7 +35,7 @@ class LocalTimezone(tzinfo):
     def dst(self, dst_):
         """ ... """
 
-        if self._isdst(dst_):
+        if _isdst(dst_):
             return DSTDIFF
         else:
             return ZERO
