@@ -2,8 +2,9 @@
 ZeroConf
 ========
 
-Publish the service of type ``_http._tcp`` (a usual web server) with only two ``TXT``
+Publish the service of type ``_http._tcp`` (a usual web server) with only three ``TXT``
 records::
 
     path=<PATH to browsable pages>
+    opds=<PATH to the root of OPDS>
     fbreader=<URL to info.xml for FBReader>
