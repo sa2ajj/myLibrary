@@ -7,4 +7,7 @@ records::
 
     path=<PATH to browsable pages>
     opds=<PATH to the root of OPDS>
-    fbreader=<URL to info.xml for FBReader>
+    fbreader=<PATH to info.xml for FBReader>
+
+.. note::
+   All paths must have the leading '/'
