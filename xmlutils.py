@@ -1,7 +1,7 @@
 
-import sys
+"""A set of xml related helpers"""
 
-from cStringIO import StringIO
+import sys
 
 from xml.etree import ElementTree as ET
 from xml.dom import minidom
@@ -48,6 +48,8 @@ def dump(elem, indent=0, stream=sys.stdout):
         dump(child, indent+2, stream)
 
 def tostring(elem):
+    """pretty printer of a xml representation of the given element"""
+
     return minidom.parseString(ET.tostring(elem, 'utf-8')).toprettyxml(indent='  ')
 
 # vim:ts=4:sw=4:et
