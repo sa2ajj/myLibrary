@@ -5,11 +5,15 @@ import os
 from datetime import datetime
 from sha import sha
 
+from PIL import Image
+
 __all__ = [ 'BookInfoError', 'BookInfo', 'BookReader' ]
 
 class BookInfoError(Exception):
     ''' exception '''
     pass
+
+THUMBNAIL_SIZE = (66, 90)
 
 class BookInfo(object):
     ''' abstract book information class '''
@@ -19,6 +23,8 @@ class BookInfo(object):
         self._stamp = None
 
         self._fnhash = None
+
+        self._thumbnail = None
 
     @classmethod
     def format_name(cls):
@@ -111,6 +117,20 @@ class BookInfo(object):
     def annotation(self):
         ''' book's annotation '''
         raise NotImplementedError, 'annotation is not defined in %s' % self.__class__.__name__
+
+    @property
+    def cover(self):
+        """book's cover page (as it is)"""
+        raise NotImplementedError, 'cover is not defined in %s' % self.__class__.__name__
+
+    @property
+    def thumbnail(self):
+        """book's cover page thumbnail"""
+
+        if self._thumbnail is None:
+            self._thumbnail = self.cover().resize(THUMBNAIL_SIZE, Image.ANTIALIAS)
+
+        return self._thumbnail
 
 def scan_dir(dirname, *formats):
     ''' scans the specified directory for books in the specified formats '''
