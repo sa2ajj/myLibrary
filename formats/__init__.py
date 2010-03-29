@@ -128,7 +128,10 @@ class BookInfo(object):
         """book's cover page thumbnail"""
 
         if self._thumbnail is None:
-            self._thumbnail = self.cover().resize(THUMBNAIL_SIZE, Image.ANTIALIAS)
+            cover = self.cover()
+
+            if cover is not None:
+                self._thumbnail = cover.resize(THUMBNAIL_SIZE, Image.ANTIALIAS)
 
         return self._thumbnail
 
