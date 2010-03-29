@@ -1,4 +1,6 @@
 
+"""Actual reader for FB2 files"""
+
 import sys
 
 from base64 import decodestring
@@ -37,13 +39,15 @@ PERSON_MIDDLE_NAME = '{%s}middle-name' % FB2_NS
 PERSON_LAST_NAME = '{%s}last-name' % FB2_NS
 
 def strip_text(text):
+    """return normalized text for an element.text"""
+
     if text is None:
         return ''
     else:
         return text.strip()
 
 def person2str(elem):
-    ''' convert a FB2 representation of a person to string '''
+    """convert a FB2 representation of a person to string"""
 
     name = []
 
@@ -59,12 +63,18 @@ def person2str(elem):
     return ' '.join(name)
 
 def tag2tag(elem):
+    """produce tag on based element's text value"""
+
     return strip_text(elem.text)
 
 def normalize_tags(tags):
+    """return a list of tag hierarchies based on genres list"""
+
     return list(set([ normalize_tag(x) for x in tags ]))
 
-def read(path):
+def read_fb2_file(path):
+    """reads fb2/fb2.zip file and returns xml internal representation"""
+
     if path.endswith('.fb2.zip'):
         archive = get_good_zip(path)
 
@@ -81,6 +91,11 @@ def read(path):
     else:
         data = open(path, 'r').read()
 
+    return data
+
+def get_root(data, path):
+    """parses supplied data and returns its root element"""
+
     root = parse_xml(data, True, path)
 
     if root is None:
@@ -93,6 +108,18 @@ def read(path):
 
     if 0:
         dump(root)
+
+    return root
+
+def read(path):
+    """read a FB2 file and return extracted meta-information"""
+
+    data = read_fb2_file(path)
+
+    if data is None:
+        return
+
+    root = get_root(data, path)
 
     title_info = root.find('.//%s' % TITLE_INFO_ELEM)
     if not title_info:
