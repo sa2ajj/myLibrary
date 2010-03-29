@@ -1,11 +1,21 @@
 
 import sys
 
+from base64 import decodestring
+
+from cStringIO import StringIO
+
+from PIL import Image
+
 from formats.utils import get_good_zip
 from formats.fb2.genres import normalize_tag
+
 from xmlutils import parse_xml, dump
 
 FB2_NS = 'http://www.gribuser.ru/xml/fictionbook/2.0'
+XLINK_NS = 'http://www.w3.org/1999/xlink'
+
+XLINK_HREF = '{%s}href' % XLINK_NS
 
 ROOT_ELEM = '{%s}FictionBook' % FB2_NS
 
@@ -15,6 +25,9 @@ TAG_ELEM = '{%s}genre' % FB2_NS
 LANG_ELEM = '{%s}lang' % FB2_NS
 AUTHOR_ELEM = '{%s}author' % FB2_NS
 SERIES_ELEM = '{%s}sequence' % FB2_NS
+COVER_ELEM = '{%s}coverpage' % FB2_NS
+IMAGE_ELEM = '{%s}image' % FB2_NS
+BINARY_ELEM = '{%s}binary' % FB2_NS
 
 DOCUMENT_INFO_ELEM = '{%s}document-info' % FB2_NS
 ID_ELEM = '{%s}id' % FB2_NS
@@ -94,6 +107,7 @@ def read(path):
     series = []
     tags = []
     annotation = None
+    cover = None
 
     for child in title_info:
         if child.tag == AUTHOR_ELEM:
@@ -109,6 +123,17 @@ def read(path):
         elif child.tag == SERIES_ELEM:
             if 'name' in child.attrib and child.attrib['name'] and child.attrib.get('number', 0):
                 series.append((child.attrib['name'], child.attrib['number']))
+        elif child.tag == COVER_ELEM:
+            if child[0].tag == IMAGE_ELEM and XLINK_HREF in child[0].attrib:
+                value = child[0].attrib[XLINK_HREF]
+
+                if value[0] == '#':
+                    value = value[1:]
+
+                binary = [ binary for binary in root.findall(BINARY_ELEM) if 'id' in binary.attrib and binary.attrib['id'] == value ]
+
+                if len(binary) == 1:
+                    cover = Image.open(StringIO(decodestring(binary[0].text)))
 
     return {
         'title': title,
@@ -117,6 +142,7 @@ def read(path):
         'series': series,
         'tags': normalize_tags(tags),
         'annotation': annotation,
+        'cover': cover,
     }
 
 # vim:ts=4:sw=4:et
