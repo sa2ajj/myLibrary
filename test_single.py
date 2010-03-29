@@ -1,6 +1,12 @@
 #! /usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
+import sys, os
+
+sys.path.insert(0, os.path.join(os.getcwd(), '..'))
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'myLibrary.settings'
+
 from formats.fb2 import FB2BookInfo
 from formats.epub import EpubBookInfo
 from catalogue.tools import print_info
