@@ -16,6 +16,8 @@ class FB2BookInfo(BookInfo):
         self._tags = []
         self._annotation = None
 
+        self._cover = None
+
     @staticmethod
     def format_name():
         return 'FB2'
@@ -92,5 +94,13 @@ class FB2BookInfo(BookInfo):
                     self.__dict__[propname] = value
 
             self._valid = True
+
+    @property
+    def cover(self):
+        """book's cover page (as it is)"""
+
+        self._fail_if_not_valid()
+
+        return self._cover
 
 # vim:ts=4:sw=4:et
