@@ -7,6 +7,12 @@ It can work in two modes:
     * display the information about found books
 """
 
+import sys, os
+
+sys.path.insert(0, os.path.join(os.getcwd(), '..'))
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'myLibrary.settings'
+
 from optparse import OptionParser
 
 from formats import scan_dir
