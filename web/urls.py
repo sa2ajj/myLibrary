@@ -12,3 +12,5 @@ urlpatterns = patterns('myLibrary.web.views',
     (r'^series$', 'list_series'),
     (r'^series/(?P<id>.+)$', 'show_series')
 )
+
+# vim:ts=4:sw=4:et
