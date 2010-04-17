@@ -12,7 +12,7 @@ class GetURI:
     def __init__(self, request):
         self._request = request
 
-    def __call__(self, uri):
+    def __call__(self, uri=None):
         return self._request.build_absolute_uri(uri)
 
 def index(request):
