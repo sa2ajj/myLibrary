@@ -26,7 +26,7 @@ def index(request):
     feed.add(FeedItemFeed('Authors', get_uri('authors')))
     feed.add(FeedItemFeed('Tags', get_uri('tags')))
     feed.add(FeedItemFeed('Series', get_uri('series')))
-    feed.add(FeedItemFeed('New Books', get_uri('new')))
+    # feed.add(FeedItemFeed('New Books', get_uri('new')))
 
     return HttpResponse(feed.xml(), mimetype=feed.mimetype)
 
