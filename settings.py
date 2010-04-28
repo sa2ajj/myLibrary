@@ -67,6 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'myLibrary.django_openidconsumer.middleware.OpenIDMiddleware',
 )
 
 ROOT_URLCONF = 'myLibrary.urls'
@@ -82,6 +83,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'myLibrary.catalogue',
+    'myLibrary.django_openidconsumer',
 )
 
 APPEND_SLASH = False

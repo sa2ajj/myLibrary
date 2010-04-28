@@ -13,6 +13,10 @@ urlpatterns = patterns('',
 
     (r'^admin/', include(admin.site.urls)),
 
+    (r'^openid/$', 'django_openidconsumer.views.begin', { 'sreg': 'nickname' }),
+    (r'^openid/complete/$', 'django_openidconsumer.views.complete'),
+    (r'^openid/signout/$', 'django_openidconsumer.views.signout'),
+
     ('', include('myLibrary.web.urls')),
 )
 
