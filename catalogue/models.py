@@ -55,6 +55,7 @@ class BookAuthor(models.Model):
         unique_together = (
             ('book', 'author'),
         )
+        ordering = ['position']
 
 class Series(models.Model):
     name = models.CharField(max_length=256, null=False)
