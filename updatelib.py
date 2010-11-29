@@ -18,15 +18,17 @@ from optparse import OptionParser
 from formats import scan_dir
 from catalogue.tools import update_book, print_info
 
-DEFAULT_FORMATS = [ 'fb2' ]
+DEFAULT_FORMATS = ['fb2']
 
 def main():
     """main worker"""
 
     parser = OptionParser()
 
-    parser.add_option('-p', '--print-only', action='store_true', dest='show', default=False)
-    parser.add_option('-f', '--format', action='append', dest='formats', default=[])
+    parser.add_option('-p', '--print-only', action='store_true', dest='show',
+                      default=False)
+    parser.add_option('-f', '--format', action='append', dest='formats',
+                      default=[])
 
     options, dirs = parser.parse_args()
 
