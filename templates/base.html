@@ -1,24 +1,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{% block title %}{% endblock %}</title>
-  <style><!--
-table {
-    border-collapse: collapse;
-}
+  <meta name="Robots" content="index,follow" />
+  <link rel="stylesheet" href="/static/style.css" type="text/css" />
+  <title>{% block title %}{{ title }}{% endblock %}</title>
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+<div id="wrap">
+	<div id="header"><div id="header-links">
+      <p>{% if USER_ACTION_URL %}{% if USER_NAME %}Logged as: {{ USER_NAME }} | <a href="/profile">Profile</a> | <a href="{{ USER_ACTION_URL }}">Log out</a>{% else %}Not logged in | <a href="{{ USER_ACTION_URL }}">Log in</a>{% endif %}{% else %}<font color="red">NO USER DATA!</font>{% endif %}</p>
+  </div></div>
 
-img {
-  border: 0;
-}
---></style>
+	<div id="header-photo">
+		<h1 id="logo-text"><a href="/" title="">{{ SITE_TITLE }}</a></h1>
+		<h2 id="slogan">{{ SITE_SUBTITLE }}</h2>
+	</div>
+	<div id="nav">
+    {% if MAIN_MENU %}<ul>
+    {% for item in MAIN_MENU %}  <li><a href="{{ item.1 }}">{{ item.0 }}</a></li>
+    {% endfor %}</ul>{% else %}<font color="red">MAIN_MENU is not defined</font>{% endif %}
+	</div>
 
+	<div id="content-wrap" class="three-col">
+		<div id="sidebar">{% block leftsidebar %}{% endblock %}</div>
+		<div id="rightcolumn">{% block rightsidebar %}<h1>Search Books</h1>
+    <form action="/search" class="searchform">
+				<p><input name="search_query" class="textbox" type="text" />
+  				<input name="search" class="button" value="Go" type="submit" /></p>
+			</form>{% endblock %}</div>
+		<div id="main">{% block body %}{{ body }}{% endblock %}</div>
+	</div>
 
-<head>
-<body><a href="/">Home</a>{% block breadcrumbs %}{% endblock %}
-<hr/>
-{% block body %}
-{% endblock %}</body>
+	<div id="footer-wrap"><div id="footer">{% block footer %}
+			<p><a href="/about">About</a> | <a href="/feedback">Feedback</a><br/>&copy; 2008 <strong>{{ COMPANY }}</strong> | Design by: <a href="http://www.styleshout.com/">styleshout</a></p>
+	{% endblock %}</div></div>
+</div>
+</body>
 </html>
 
 <!--
