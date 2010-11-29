@@ -23,13 +23,12 @@ DEFAULT_FORMATS = ['fb2']
 def main():
     """main worker"""
 
-    parser = OptionParser()
+    parser = OptionParser(usage='%prog [options] <dir> [<dir>...]')
 
     parser.add_option('-p', '--print-only', action='store_true', dest='show',
-                      default=False)
+                      default=False, help='do not update the database')
     parser.add_option('-f', '--format', action='append', dest='formats',
-                      default=[])
-
+                      help='format to consider', default=[], metavar='FORMAT')
     options, dirs = parser.parse_args()
 
     if not options.formats:
