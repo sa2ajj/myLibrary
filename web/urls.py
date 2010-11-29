@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns
 
 urlpatterns = patterns('myLibrary.web.views',
     (r'^$', 'index'),
@@ -11,6 +11,11 @@ urlpatterns = patterns('myLibrary.web.views',
     (r'^tag/(?P<tag_id>.+)$', 'show_tag'),
     (r'^series$', 'list_series'),
     (r'^series/(?P<series_id>.+)$', 'show_series')
+)
+
+urlpatterns += patterns('django.views.generic.simple',
+    (r'^about$', 'direct_to_template', dict(template='about.html')),
+    (r'^feedback$', 'direct_to_template', dict(template='feedback.html')),
 )
 
 # vim:ts=4:sw=4:et
