@@ -1,13 +1,18 @@
 from django.db import models
 
 class BookFormat(models.Model):
+    """
+    Book format
+    """
     name = models.CharField(max_length=128, null=False, unique=True)
 
     def __unicode__(self):
         return self.name
 
 class Book(models.Model):
-    ''' ... '''
+    """
+    Book record
+    """
 
     uid = models.CharField(max_length=1024, null=False)
     uid_scheme = models.CharField(max_length=64, null=False)
@@ -30,13 +35,15 @@ class Book(models.Model):
         return self.title
 
     class Meta:
-        ordering = [ 'title' ]
+        ordering = ['title']
         unique_together = (
             ('uid', 'uid_scheme'),
         )
 
 class Author(models.Model):
-    ''' ... '''
+    """
+    Author record
+    """
 
     name = models.CharField(max_length=256, null=False, unique=True)
 
@@ -44,9 +51,14 @@ class Author(models.Model):
         return self.name
 
     class Meta:
-        ordering = [ 'name' ]
+        ordering = ['name']
 
+# TODO: make this a "through" model for ManyToManyField in Book
 class BookAuthor(models.Model):
+    """
+    Link between books and authors
+    """
+
     book = models.ForeignKey(Book)
     author = models.ForeignKey(Author)
     position = models.PositiveIntegerField(null=False)
@@ -58,6 +70,9 @@ class BookAuthor(models.Model):
         ordering = ['position']
 
 class Series(models.Model):
+    """
+    Series information
+    """
     name = models.CharField(max_length=256, null=False)
 
     def __unicode__(self):
@@ -66,9 +81,14 @@ class Series(models.Model):
     class Meta:
         verbose_name_plural = 'Series'
         db_table = 'catalogue_series'
-        ordering = [ 'name' ]
+        ordering = ['name']
 
+# TODO: make this a "through" model for ManyToManyField in Book
 class BookSeries(models.Model):
+    """
+    Link between books and series
+    """
+
     book = models.ForeignKey(Book)
     series = models.ForeignKey(Series)
     number = models.IntegerField()
@@ -79,6 +99,10 @@ class BookSeries(models.Model):
         )
 
 class Tag(models.Model):
+    """
+    Tag record
+    """
+
     name = models.CharField(max_length=128, null=False)
     parent = models.ForeignKey('self', null=True)
 
@@ -86,12 +110,18 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        ordering = [ 'name' ]
+        ordering = ['name']
         unique_together = (
             ('name', 'parent'),
         )
 
+# TODO: make this a "through" model for ManyToManyField in Book
+# TODO: reconsider having this model at all
 class BookTag(models.Model):
+    """
+    Link between book and tags
+    """
+
     book = models.ForeignKey(Book)
     tag = models.ForeignKey(Tag)
 
