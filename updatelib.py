@@ -34,7 +34,7 @@ def main():
     if not options.formats:
         options.formats = DEFAULT_FORMATS
 
-    for dirname in dirs:
+    for dirname in [os.path.expanduser(x) for x in dirs]:
         for info in scan_dir(dirname, *options.formats):
             if options.show:
                 info.validate()
