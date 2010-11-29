@@ -13,6 +13,14 @@ DC_NS = 'http://purl.org/dc/elements/1.1/'
 
 FEED_MIME_TYPE = 'application/atom+xml'
 
+class FeedItemNotImplementedError(NotImplementedError):
+    """helper for not implemented items in FeedItem"""
+
+    def __init__(self, method, class_name):
+        """a really simple constructor"""
+
+        NotImplementedError.__init__(self, 'method "%s" not implemented in '
+                                           'class "%s"' % (method, class_name))
 class FeedItem(object):
     """base class for various feed related items"""
 
@@ -100,7 +108,7 @@ class FeedItem(object):
     def get_uid(self):
         """get the item's unique id"""
 
-        raise NotImplementedError, '%s has no implementation for get_uid' % self.__class__.__name__
+        raise FeedItemNotImplementedError('get_uid', self.__class__.__name__)
 
     @property
     def title(self):
@@ -111,12 +119,13 @@ class FeedItem(object):
     def get_title(self):
         """get the item's title"""
 
-        raise NotImplementedError, '%s has no implementation for get_title' % self.__class__.__name__
+        raise FeedItemNotImplementedError('get_title', self.__class__.__name__)
 
     def add_other_elems(self):
         """add all other properties for the entry"""
 
-        raise NotImplementedError, '%s has no implementation for add_other_elems' % self.__class__.__name__
+        raise FeedItemNotImplementedError('add_other_elems',
+                                          self.__class__.__name__)
 
 class Feed(FeedItem):
     """represents an atom feed"""

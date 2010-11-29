@@ -3,16 +3,24 @@
 
 import os
 from datetime import datetime
-from sha import sha
+from hashlib import sha1
 
 from PIL import Image
 
-__all__ = [ 'BookInfoError', 'BookInfo', 'BookReader' ]
+__all__ = ['BookInfoError', 'BookInfo', 'BookReader']
 
 class BookInfoError(Exception):
     """exception"""
     pass
 
+class BookInfoNotImplementedError(NotImplementedError):
+    """
+    a helper for all not implemented methods in BookInfo
+    """
+
+    def __init__(self, method, name):
+        NotImplementedError.__init__(self, 'Method "%s" is not implemented '
+                                           'in class "%s"' % (method, name))
 THUMBNAIL_SIZE = (66, 90)
 
 class BookInfo(object):
@@ -29,19 +37,19 @@ class BookInfo(object):
     @classmethod
     def format_name(cls):
         """human readable format name"""
-        raise NotImplementedError, 'format_name is not defined in %s' % cls.__name__
+        raise BookInfoNotImplementedError('format_name', cls.__name__)
 
     @classmethod
-    def supports(cls, filename):
+    def supports(cls, filename_):
         """checks whether a file is supported
 
         (usually based on file extension)
         """
-        raise NotImplementedError, 'supports is not defined in %s' % cls.__name__
+        raise BookInfoNotImplementedError('supports', cls.__name__)
 
     def validate(self):
         """reads and validates the book at self._path"""
-        raise NotImplementedError, 'supports is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('validate', self.__class__.__name__)
 
     @property
     def valid(self):
@@ -49,17 +57,17 @@ class BookInfo(object):
 
         (in other words, whether the properties below would give a valid value
         """
-        raise NotImplementedError, 'valid is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('valid', self.__class__.__name__)
 
     @property
     def language(self):
         """the book language"""
-        raise NotImplementedError, 'language is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('language', self.__class__.__name__)
 
     @property
     def title(self):
         """the book title"""
-        raise NotImplementedError, 'title is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('title', self.__class__.__name__)
 
     @property
     def authors(self):
@@ -67,25 +75,25 @@ class BookInfo(object):
 
         order is important
         """
-        raise NotImplementedError, 'authors is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('authors', self.__class__.__name__)
 
     @property
     def series(self):
         """list of series the book belong to
 
-        format: [ (<series name>, <series #>), ... ]
+        format: [(<series name>, <series #>), ...]
         """
-        raise NotImplementedError, 'series is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('series', self.__class__.__name__)
 
     @property
     def tags(self):
         """list of tags for the book"""
-        raise NotImplementedError, 'tags is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('tags', self.__class__.__name__)
 
     @property
     def mimetype(self):
         """mime type for the book's file"""
-        raise NotImplementedError, 'mimetype is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('mimetype', self.__class__.__name__)
 
     @property
     def path(self):
@@ -109,19 +117,19 @@ class BookInfo(object):
         format: (<id schema>, <id>)
         """
         if self._fnhash is None:
-            self._fnhash = sha(self.path).hexdigest()
+            self._fnhash = sha1(self.path).hexdigest()
 
         return ('fnhash', self._fnhash)
 
     @property
     def annotation(self):
         """book's annotation"""
-        raise NotImplementedError, 'annotation is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('annotation', self.__class__.__name__)
 
     @property
     def cover(self):
         """book's cover page (as it is)"""
-        raise NotImplementedError, 'cover is not defined in %s' % self.__class__.__name__
+        raise BookInfoNotImplementedError('cover', self.__class__.__name__)
 
     @property
     def thumbnail(self):
@@ -143,7 +151,7 @@ def scan_dir(dirname, *formats):
     from formats.fb2 import FB2BookInfo
     from formats.epub import EpubBookInfo
 
-    known_formats = [ FB2BookInfo, EpubBookInfo ]
+    known_formats = [FB2BookInfo, EpubBookInfo]
 
     if not formats:
         formats = [x.format_name().lower() for x in known_formats]
@@ -154,13 +162,12 @@ def scan_dir(dirname, *formats):
         for filename in filenames:
             book_info = None
 
-            for format in supported:
-                if format.supports(filename):
-                    book_info = format
+            for fmt in supported:
+                if fmt.supports(filename):
+                    book_info = fmt
                     break
 
             if book_info is not None:
-                fullpath = os.path.join(path, filename)
-                yield book_info(fullpath)
+                yield book_info(os.path.join(path, filename))
 
 # vim:ts=4:sw=4:et
