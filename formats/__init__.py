@@ -136,7 +136,9 @@ class BookInfo(object):
         return self._thumbnail
 
 def scan_dir(dirname, *formats):
-    """scans the specified directory for books in the specified formats"""
+    """
+    scan the specified directory for books in the specified formats
+    """
 
     from formats.fb2 import FB2BookInfo
     from formats.epub import EpubBookInfo
@@ -144,10 +146,9 @@ def scan_dir(dirname, *formats):
     known_formats = [ FB2BookInfo, EpubBookInfo ]
 
     if not formats:
-        supported = known_formats
-    else:
-        formats = [ x.lower() for x in formats ]
-        supported = [ x for x in known_formats if x.format_name().lower() in formats ]
+        formats = [x.format_name().lower() for x in known_formats]
+
+    supported = [x for x in known_formats if x.format_name().lower() in formats]
 
     for path, _, filenames in os.walk(dirname):
         for filename in filenames:
