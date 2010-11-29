@@ -2,13 +2,22 @@
 
 import os
 
+from django.template.context import RequestContext
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed, \
                         HttpResponseServerError
-from django.shortcuts import get_object_or_404, render_to_response
-
+from django.shortcuts import get_object_or_404, \
+                             render_to_response as django_render_to_response
 from catalogue.models import Book, Author, Tag, Series
 
 ATTACHMENT = 'attachment; filename=%s'
+
+def render_to_response(*args, **kwargs):
+    """helper to render templates in RequestContext context"""
+
+    kwargs['context_instance'] = RequestContext(kwargs['request'])
+    del kwargs['request']
+
+    return django_render_to_response(*args, **kwargs)
 
 def _validate_id(value):
     """check if the provided id is a number"""
@@ -20,19 +29,19 @@ def _validate_id(value):
 
     return result
 
-def index(request_):
+def index(request):
     """home view"""
 
-    return render_to_response('home.html')
+    return render_to_response('home.html', request=request)
 
-def list_books(request_):
+def list_books(request):
     """list registered books"""
 
     books = Book.objects.order_by('title')
 
-    return render_to_response('books.html', dict(books=books))
+    return render_to_response('books.html', dict(books=books), request=request)
 
-def show_book(request_, book_id):
+def show_book(request, book_id):
     """show particular book"""
 
     book_id = _validate_id(book_id)
@@ -43,7 +52,7 @@ def show_book(request_, book_id):
     tags = [x.tag for x in book.booktag_set.order_by('tag__name')]
 
     return render_to_response('book.html', dict(book=book, authors=authors,
-                                                tags=tags))
+                                                tags=tags), request=request)
 
 def download_file(request, file_id):
     """download a file"""
@@ -71,23 +80,25 @@ def download_file(request, file_id):
 
     return response
 
-def list_authors(request_):
+def list_authors(request):
     """list known authors"""
 
     authors = Author.objects.order_by('name')
 
-    return render_to_response('authors.html', dict(authors=authors))
+    return render_to_response('authors.html', dict(authors=authors),
+                              request=request)
 
-def show_author(request_, author_id):
+def show_author(request, author_id):
     """show particular author"""
 
     author = get_object_or_404(Author, id=_validate_id(author_id))
 
     books = [x.book for x in author.bookauthor_set.order_by('book__title')]
 
-    return render_to_response('author.html', dict(author=author, books=books))
+    return render_to_response('author.html', dict(author=author, books=books),
+                              request=request)
 
-def list_tags(request_):
+def list_tags(request):
     """list registered tags"""
 
     not_tagged = Book.objects.filter(booktag=None)
@@ -98,9 +109,9 @@ def list_tags(request_):
 
     tags.insert(0, ('none', '<no tag>', len(not_tagged), 0))
 
-    return render_to_response('tags.html', dict(tags=tags))
+    return render_to_response('tags.html', dict(tags=tags), request=request)
 
-def show_tag(request_, tag_id):
+def show_tag(request, tag_id):
     """show particular tag"""
 
     if tag_id == 'none':
@@ -123,21 +134,24 @@ def show_tag(request_, tag_id):
         books = [x.book for x in tag.booktag_set.order_by('book__title')]
 
     return render_to_response('tag.html', dict(tag=tag, subtags=subtags,
-                                               books=books, tag_path=tag_path))
-def list_series(request_):
+                                               books=books, tag_path=tag_path),
+                              request=request)
+def list_series(request):
     """list available series"""
 
     series = Series.objects.order_by('name')
 
-    return render_to_response('all-series.html', dict(series=series))
+    return render_to_response('all-series.html', dict(series=series),
+                              request=request)
 
-def show_series(request_, series_id):
+def show_series(request, series_id):
     """show particular series"""
 
     series = Series.objects.get(id=_validate_id(series_id))
 
     books = [(x.number, x.book) for x in \
                 series.bookseries_set.order_by('number')]
-    return render_to_response('series.html', dict(series=series, books=books))
+    return render_to_response('series.html', dict(series=series, books=books),
+                              request=request)
 
 # vim:ts=4:sw=4:et
