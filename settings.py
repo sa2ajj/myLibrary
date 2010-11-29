@@ -67,7 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'myLibrary.django_openidconsumer.middleware.OpenIDMiddleware',
+    # 'myLibrary.django_openidconsumer.middleware.OpenIDMiddleware',
 )
 
 ROOT_URLCONF = 'myLibrary.urls'
@@ -83,7 +83,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'myLibrary.catalogue',
-    'myLibrary.django_openidconsumer',
+    # 'myLibrary.django_openidconsumer',
 )
 
 APPEND_SLASH = False
+
+# Application settings
+SITE_TITLE = 'My Strange Library'
+SITE_SUBTITLE = 'Your books available everywhere'
+
+MAIN_MENU = (
+    ( 'Home', '/' ),
+    # ( 'Updates', '/new' ),
+    ( 'Books', '/book' ),
+    ( 'Authors', '/author' ),
+    ( 'Tags', '/tag' ),
+    ( 'Series', '/series' ),
+)
+
+COMPANY = 'Roga & Kopyta, Inc.'
+
+# vim:ts=4:sw=4:et
