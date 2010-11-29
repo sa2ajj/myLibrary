@@ -1,6 +1,9 @@
 
 """Actual reader for FB2 files"""
 
+import logging
+LOG = logging.getLogger(__name__)
+
 import sys
 
 from base64 import decodestring
@@ -79,7 +82,7 @@ def read_fb2_file(path):
         archive = get_good_zip(path)
 
         if archive is None:
-            print >> sys.stderr, '%s is not a valid zip file' % path
+            LOG.error('%s is not a valid zip file', path)
             return
 
         files = archive.namelist()
@@ -99,11 +102,12 @@ def get_root(data, path):
     root = parse_xml(data, True, path)
 
     if root is None:
-        print >> sys.stderr, 'Invalid data in %s' % path
+        LOG.error('Invalid data in %s', path)
         return
 
     if root.tag != ROOT_ELEM:
-        print >> sys.stderr, '%s has wrong root element: %s' % (path, root.tag)
+        LOG.error('%s has wrong root element: %s (expected %s)',
+                  path, root.tag, ROOT_ELEM)
         return
 
     if 0:
@@ -114,6 +118,8 @@ def get_root(data, path):
 def read(path):
     """read a FB2 file and return extracted meta-information"""
 
+    LOG.debug("reading %s", path)
+
     data = read_fb2_file(path)
 
     if data is None:
@@ -123,8 +129,8 @@ def read(path):
 
     title_info = root.find('.//%s' % TITLE_INFO_ELEM)
     if not title_info:
-        print >> sys.stderr, 'Could not find title-info for %s' % path
-        print >> sys.stderr, '  elem:', TITLE_INFO_ELEM
+        LOG.error('Could not find title-info for %s', path)
+        LOG.error('  elem:', TITLE_INFO_ELEM)
         dump(root, stream=sys.stderr)
         return
 

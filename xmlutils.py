@@ -1,12 +1,13 @@
 
 """A set of xml related helpers"""
 
+import logging
+LOG = logging.getLogger(__name__)
+
 import sys
 
 from xml.etree import ElementTree as ET
 from xml.dom import minidom
-
-from traceback import print_exc
 
 def parse_xml(data, info=False, label=None):
     ''' parses provided XML string using ElementTree '''
@@ -16,10 +17,8 @@ def parse_xml(data, info=False, label=None):
     except:
         # TODO: try to find a way to catch the right exception only
         if info:
-            print_exc()
-            if label:
-                print >> sys.stderr, 'Label:', label
-            print >> sys.stderr, 'parse_xml: %s: %s' % (type(data), data)
+            LOG.exception('Exception (label=%s):', label)
+            LOG.error('parse_xml: %s: %s', type(data), data)
 
         result = None
 

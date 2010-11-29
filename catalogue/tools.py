@@ -1,6 +1,8 @@
 #
 
 from catalogue.models import BookFormat, Book, Author, BookAuthor, Series, BookSeries, Tag, BookTag
+import logging
+LOG = logging.getLogger(__name__)
 
 def _safe_text(text):
     return text.encode('utf-8')
@@ -39,13 +41,13 @@ def update_book(book_info):
             mode = 'skip'
 
     if mode in ('read', 'update'):
-        print 'update_book:', mode
+        LOG.info('update_book:', mode)
 
         book_info.validate()
 
         if book_info.valid:
-            print 'update_book: found a book:', book_info.path, book_info.stamp
-
+            LOG.info('update_book: found a book: %s, %s', book_info.path,
+                                                          book_info.stamp)
             if 1:
                 print_info(book_info)
 
@@ -108,6 +110,7 @@ def update_book(book_info):
                 booktag = BookTag(book=book, tag=db_tag)
                 booktag.save()
         else:
-            print 'update_book: not a valid book at', book_info.path
+            LOG.error('update_book: not a valid book at', book_info.path)
     elif mode == 'skip':
-        print 'update_book: %s already registered and is up to date' % book_info.path
+        LOG.warn('update_book: %s already registered and is up to date',
+                 book_info.path)

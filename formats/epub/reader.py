@@ -1,3 +1,6 @@
+import logging
+LOG = logging.getLogger(__name__)
+
 import sys
 
 from formats.utils import parse_xml, get_good_zip, dump
@@ -47,7 +50,7 @@ def read_opf_metadata(metadata):
             if role == 'aut':
                 authors.append(child.text.strip())
 
-    return {
+    result = {
         'title': title,
         'language': language,
         'authors': authors,
@@ -56,19 +59,25 @@ def read_opf_metadata(metadata):
         'annotation': annotation,
     }
 
+    LOG.debug('read_opf_metadata output: %s', result)
+
+    return result
+
 def read(path):
+    LOG.debug("reading %s", path)
+
     archive = get_good_zip(path)
 
     try:
         container = archive.read(CONTAINER)
     except KeyError:
-        print >> sys.stderr, '%s has no container' % path
+        LOG.error('%s has no container', path)
         return
 
     container = parse_xml(container)
 
     if container is None:
-        print >> sys.stderr, '%s has invalid container' % path
+        LOG.error('%s has invalid container', path)
         return
 
     opf_name = container.find('.//{%s}rootfile' % CONTAINER_NS).get('full-path')
@@ -76,7 +85,7 @@ def read(path):
     try:
         opf = archive.read(opf_name)
     except KeyError:
-        print >> sys.stderr, 'Could not open opf file (%s)' % opf_name
+        LOG.error('Could not open opf file (%s)', opf_name.encode('utf-8'))
         return
 
     opf = parse_xml(opf)
@@ -92,7 +101,7 @@ def read(path):
             break
 
     if metadata is None:
-        print >> sys.stderr, 'Could not find metadata in the opf file'
+        LOG.error('Could not find metadata in the opf file')
         return
 
     if metadata.tag == 'metadata':

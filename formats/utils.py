@@ -1,6 +1,9 @@
 
 ''' A number of commonly used functions '''
 
+import logging
+LOG = logging.getLogger(__name__)
+
 import sys
 import zipfile
 
@@ -10,11 +13,11 @@ def get_good_zip(zipname, test=False):
     try:
         archive = zipfile.ZipFile(zipname)
     except zipfile.BadZipfile:
-        print >> sys.stderr, '%s is not a zip file' % zipname
+        LOG.error('%s is not a zip file', zipname)
         return
 
     if test and archive.testzip():
-        print >> sys.stderr, '%s is broken' % zipname
+        LOG.error('%s is broken', zipname)
         return
 
     return archive

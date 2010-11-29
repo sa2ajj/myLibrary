@@ -7,6 +7,9 @@ It can work in two modes:
     * display the information about found books
 """
 
+import logging
+LOG = logging.getLogger(__name__)
+
 import sys, os
 
 sys.path.insert(0, os.path.join(os.getcwd(), '..'))
@@ -23,13 +26,22 @@ DEFAULT_FORMATS = ['fb2']
 def main():
     """main worker"""
 
+    logging.basicConfig()
+
     parser = OptionParser(usage='%prog [options] <dir> [<dir>...]')
 
     parser.add_option('-p', '--print-only', action='store_true', dest='show',
                       default=False, help='do not update the database')
     parser.add_option('-f', '--format', action='append', dest='formats',
                       help='format to consider', default=[], metavar='FORMAT')
+    parser.add_option('--debug', action='store_true', dest='debug',
+                      help='enable debug output')
     options, dirs = parser.parse_args()
+
+    if options.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
+    else:
+        logging.getLogger().setLevel(logging.INFO)
 
     if not options.formats:
         options.formats = DEFAULT_FORMATS

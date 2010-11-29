@@ -1,4 +1,7 @@
 
+import logging
+LOG = logging.getLogger(__name__)
+
 import os, sys
 
 from xmlutils import parse_xml, dump
@@ -72,12 +75,12 @@ def _ensure_genres(lang='en'):
                                 result.add_alias(fb2_subgenre, subelem.attrib['value'])
 
                         if sub_name is None:
-                            print >> sys.stderr, 'could not find name for %s' % fb2_subgenre
+                            LOG.error('could not find name for %s', fb2_subgenre)
                         else:
                             result.add_genre(fb2_subgenre, fb2_genre, sub_name)
 
             if name is None:
-                print >> sys.stderr, 'could not find name for %s' % fb2_genre
+                LOG.error('could not find name for %s', fb2_genre)
             else:
                 result.add_genre(fb2_genre, None, name)
 
