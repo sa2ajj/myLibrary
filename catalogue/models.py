@@ -9,6 +9,50 @@ class BookFormat(models.Model):
     def __unicode__(self):
         return self.name
 
+class Author(models.Model):
+    """
+    Author record
+    """
+
+    name = models.CharField(max_length=256, null=False, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+class Tag(models.Model):
+    """
+    Tag record
+    """
+
+    name = models.CharField(max_length=128, null=False)
+    parent = models.ForeignKey('self', null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        unique_together = (
+            ('name', 'parent'),
+        )
+
+class Series(models.Model):
+    """
+    Series information
+    """
+    name = models.CharField(max_length=256, null=False)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Series'
+        db_table = 'catalogue_series'
+        ordering = ['name']
+
 class Book(models.Model):
     """
     Book record
@@ -18,6 +62,9 @@ class Book(models.Model):
     uid_scheme = models.CharField(max_length=64, null=False)
 
     title = models.TextField(null=False)
+    authors = models.ManyToManyField(Author, through='BookAuthor')
+    series = models.ManyToManyField(Series, through='BookSeries')
+    tags = models.ManyToManyField(Tag, through='BookTag')
 
     language = models.CharField(max_length=64, null=False)
 
@@ -40,20 +87,6 @@ class Book(models.Model):
             ('uid', 'uid_scheme'),
         )
 
-class Author(models.Model):
-    """
-    Author record
-    """
-
-    name = models.CharField(max_length=256, null=False, unique=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-# TODO: make this a "through" model for ManyToManyField in Book
 class BookAuthor(models.Model):
     """
     Link between books and authors
@@ -69,21 +102,6 @@ class BookAuthor(models.Model):
         )
         ordering = ['position']
 
-class Series(models.Model):
-    """
-    Series information
-    """
-    name = models.CharField(max_length=256, null=False)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = 'Series'
-        db_table = 'catalogue_series'
-        ordering = ['name']
-
-# TODO: make this a "through" model for ManyToManyField in Book
 class BookSeries(models.Model):
     """
     Link between books and series
@@ -98,25 +116,6 @@ class BookSeries(models.Model):
             ('book', 'series', 'number'),
         )
 
-class Tag(models.Model):
-    """
-    Tag record
-    """
-
-    name = models.CharField(max_length=128, null=False)
-    parent = models.ForeignKey('self', null=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-        unique_together = (
-            ('name', 'parent'),
-        )
-
-# TODO: make this a "through" model for ManyToManyField in Book
-# TODO: reconsider having this model at all
 class BookTag(models.Model):
     """
     Link between book and tags

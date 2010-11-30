@@ -49,7 +49,7 @@ def show_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     authors = [x.author for x in book.bookauthor_set.order_by('position')]
-    tags = [x.tag for x in book.booktag_set.order_by('tag__name')]
+    tags = book.tags.order_by('name')
 
     return render_to_response('book.html', dict(book=book, authors=authors,
                                                 tags=tags), request=request)
@@ -93,7 +93,7 @@ def show_author(request, author_id):
 
     author = get_object_or_404(Author, id=_validate_id(author_id))
 
-    books = [x.book for x in author.bookauthor_set.order_by('book__title')]
+    books = author.book_set.order_by('title')
 
     return render_to_response('author.html', dict(author=author, books=books),
                               request=request)
@@ -117,7 +117,7 @@ def show_tag(request, tag_id):
     if tag_id == 'none':
         tag = '<no tag>'
         subtags, tag_path = [], []
-        books = Book.objects.filter(booktag=None)
+        books = Book.objects.filter(tags=None)
     else:
         tag = get_object_or_404(Tag, id=_validate_id(tag_id))
 
@@ -131,7 +131,7 @@ def show_tag(request, tag_id):
         subtags = [(x.id, x.name, x.booktag_set.count(),
                     Tag.objects.filter(parent=x).count()) for x \
                         in Tag.objects.filter(parent=tag).order_by('name')]
-        books = [x.book for x in tag.booktag_set.order_by('book__title')]
+        books = tag.book_set.order_by('title')
 
     return render_to_response('tag.html', dict(tag=tag, subtags=subtags,
                                                books=books, tag_path=tag_path),

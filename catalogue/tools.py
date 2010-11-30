@@ -76,22 +76,17 @@ def update_book(book_info):
                 book.mimetype = book_info.mimetype
                 book.annotation = book_info.annotation
 
-                for author in book.bookauthor_set.all():
-                    author.delete()
-
-                for series in book.bookseries_set.all():
-                    series.delete()
-
-                for tag in book.booktag_set.all():
-                    tag.delete()
+                book.authors.clear()
+                book.series.clear()
+                book.tags.clear()
 
             book.save()
 
-            for position, author in enumerate(book_info.authors):
+            for position, author in enumerate(book_info.authors, 1):
                 db_author, _ = Author.objects.get_or_create(name=author)
 
                 bookauthor = BookAuthor(book=book, author=db_author,
-                                        position=position+1)
+                                        position=position)
                 bookauthor.save()
 
             for series, number in book_info.series:
