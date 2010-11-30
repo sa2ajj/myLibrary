@@ -1,9 +1,10 @@
 #
 
-from catalogue.models import BookFormat, Book, Author, BookAuthor, Series, BookSeries, Tag, BookTag
 import logging
 LOG = logging.getLogger(__name__)
 
+from catalogue.models import BookFormat, Book, Author, BookAuthor, Series, \
+                             BookSeries, Tag, BookTag
 def _safe_text(text):
     return text.encode('utf-8')
 
@@ -52,7 +53,7 @@ def update_book(book_info):
                 print_info(book_info)
 
             if mode == 'read':
-                format, _ = BookFormat.objects.get_or_create(name=book_info.format_name())
+                fmt, _ = BookFormat.objects.get_or_create(name=book_info.format_name())
                 book = Book(
                     uid=book_id[1],
                     uid_scheme=book_id[0],
@@ -61,19 +62,19 @@ def update_book(book_info):
                     file=book_info.path,
                     file_stamp=book_info.stamp,
                     mimetype=book_info.mimetype,
-                    format=format,
+                    format=fmt,
                     annotation=book_info.annotation
                 )
             else:
                 # it is assumed that book format does not change
-                book.uid=book_id[1]
-                book.uid_scheme=book_id[0]
-                book.title=book_info.title
-                book.language=book_info.language
-                book.file=book_info.path
-                book.file_stamp=book_info.stamp
-                book.mimetype=book_info.mimetype
-                book.annotation=book_info.annotation
+                book.uid = book_id[1]
+                book.uid_scheme = book_id[0]
+                book.title = book_info.title
+                book.language = book_info.language
+                book.file = book_info.path
+                book.file_stamp = book_info.stamp
+                book.mimetype = book_info.mimetype
+                book.annotation = book_info.annotation
 
                 for author in book.bookauthor_set.all():
                     author.delete()
@@ -89,21 +90,24 @@ def update_book(book_info):
             for position, author in enumerate(book_info.authors):
                 db_author, _ = Author.objects.get_or_create(name=author)
 
-                bookauthor = BookAuthor(book=book, author=db_author, position=position+1)
+                bookauthor = BookAuthor(book=book, author=db_author,
+                                        position=position+1)
                 bookauthor.save()
 
             for series, number in book_info.series:
                 db_series, _ = Series.objects.get_or_create(name=series)
 
-                bookseries = BookSeries(book=book, series=db_series, number=number)
+                bookseries = BookSeries(book=book, series=db_series,
+                                        number=number)
                 bookseries.save()
 
             for tag in book_info.tags:
                 if '/' in tag:
                     db_tag = None
 
-                    for name in [ x.strip() for x in tag.split('/') ]:
-                        db_tag, _ = Tag.objects.get_or_create(name=name, parent=db_tag)
+                    for name in [x.strip() for x in tag.split('/')]:
+                        db_tag, _ = Tag.objects.get_or_create(name=name,
+                                                              parent=db_tag)
                 else:
                     db_tag, _ = Tag.objects.get_or_create(name=tag)
 

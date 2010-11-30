@@ -1,5 +1,4 @@
-
-"""Actual reader for FB2 files"""
+"""FB2 file reader"""
 
 import logging
 LOG = logging.getLogger(__name__)
@@ -154,17 +153,20 @@ def read(path):
         elif child.tag == LANG_ELEM:
             language = strip_text(child.text)
         elif child.tag == SERIES_ELEM:
-            if 'name' in child.attrib and child.attrib['name'] and child.attrib.get('number', 0):
+            if 'name' in child.attrib and child.attrib['name'] \
+                                      and child.attrib.get('number', 0):
                 series.append((child.attrib['name'], child.attrib['number']))
         elif child.tag == COVER_ELEM:
-            if child[0].tag == IMAGE_ELEM and XLINK_HREF in child[0].attrib:
+            if len(child) and \
+               child[0].tag == IMAGE_ELEM and XLINK_HREF in child[0].attrib:
                 value = child[0].attrib[XLINK_HREF]
 
                 if value[0] == '#':
                     value = value[1:]
 
-                binary = [ binary for binary in root.findall(BINARY_ELEM) if 'id' in binary.attrib and binary.attrib['id'] == value ]
-
+                binary = [binary for binary in root.findall(BINARY_ELEM) \
+                                 if 'id' in binary.attrib and \
+                                            binary.attrib['id'] == value]
                 if len(binary) == 1:
                     cover = Image.open(StringIO(decodestring(binary[0].text)))
 

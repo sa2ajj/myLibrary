@@ -1,9 +1,12 @@
+"""ePub file reader"""
+
 import logging
 LOG = logging.getLogger(__name__)
 
 import sys
 
-from formats.utils import parse_xml, get_good_zip, dump
+from formats.utils import get_good_zip
+from xmlutils import parse_xml, dump
 
 CONTAINER = 'META-INF/container.xml'
 
@@ -12,6 +15,11 @@ CONTAINER_NS = 'urn:oasis:names:tc:opendocument:xmlns:container'
 IDPF_NS = 'http://www.idpf.org/2007/opf'
 
 def read_oeb_metadata(metadata):
+    for child in metadata:
+        if child.tag == 'dc-metadata':
+            metadata = child
+            break
+
     print 'OEB:'
     dump(metadata)
 
@@ -19,12 +27,18 @@ def read_opf_metadata(metadata):
     print 'OPF:'
     dump(metadata)
 
+    if len(metadata) == 0:
+        return
+
     title = None
     language = None
     authors = []
     series = []
     tags = []
     annotation = None
+
+    if metadata[0].tag.endswith('dc-metadata'):
+        metadata = metadata[0]
 
     for child in metadata:
         index = child.tag.find('}')
@@ -92,6 +106,9 @@ def read(path):
 
     if 0:
         dump(opf)
+
+    if opf is None:
+        return
 
     metadata = None
 
